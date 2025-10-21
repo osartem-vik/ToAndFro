@@ -8,11 +8,14 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigLoader {
-    private static Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
-    private static Properties properties = new Properties();
+    private final static Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
+    private static Properties properties;
+    private final static String PATH_OF_PROPERTIES = "app.properties";
+    private static final ConfigLoader INSTANCE = new ConfigLoader();
 
-    static {
-        try (InputStream input = ConfigLoader.class.getClassLoader().getResourceAsStream("app.properties")) {
+    private ConfigLoader(){
+        this.properties = new Properties();
+        try (InputStream input = ConfigLoader.class.getClassLoader().getResourceAsStream(PATH_OF_PROPERTIES)) {
             if (input == null)
                 throw new IOException("Unable to find a file with properties");
             properties.load(input);
@@ -21,6 +24,9 @@ public class ConfigLoader {
             logger.error("Error loading config", ex);
             throw new RuntimeException("Error loading config", ex);
         }
+    }
+    public static ConfigLoader getInstance(){
+        return INSTANCE;
     }
     public static String getDBUrl(){
         return properties.getProperty("db.url");
