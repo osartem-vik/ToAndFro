@@ -1,5 +1,7 @@
 package com.ToAndFro.configs;
 
+import com.ToAndFro.exceptions.ConfigFileNotFoundException;
+import com.ToAndFro.exceptions.ConfigLoadingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,12 +19,12 @@ public class ConfigLoader {
         this.properties = new Properties();
         try (InputStream input = ConfigLoader.class.getClassLoader().getResourceAsStream(PATH_OF_PROPERTIES)) {
             if (input == null)
-                throw new IOException("Unable to find a file with properties");
+                throw new ConfigFileNotFoundException("Unable to find a file with properties");
             properties.load(input);
             logger.info("Configuration loaded successfully");
         } catch (IOException ex) {
             logger.error("Error loading config", ex);
-            throw new RuntimeException("Error loading config", ex);
+            new ConfigLoadingException("Error loading config", ex);
         }
     }
     public static ConfigLoader getInstance(){
