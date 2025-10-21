@@ -8,11 +8,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JdbcConnectionFactory {
-    private static Logger logger = LoggerFactory.getLogger(JdbcConnectionFactory.class);
-    private static String URL = ConfigLoader.getDBUrl();
-    private static String USERNAME = ConfigLoader.getDBUserName();
-    private static String PASSWORD = ConfigLoader.getDBPassword();
-    private static String DRIVER = ConfigLoader.getDBDriver();
+    private final static Logger logger = LoggerFactory.getLogger(JdbcConnectionFactory.class);
+    private final static String URL = ConfigLoader.getDBUrl();
+    private final static String USERNAME = ConfigLoader.getDBUserName();
+    private final static String PASSWORD = ConfigLoader.getDBPassword();
+    private final static String DRIVER = ConfigLoader.getDBDriver();
 
     public static Connection getConnection() throws SQLException {
         logger.debug("Attempting to create DB connection to: {}", URL);
