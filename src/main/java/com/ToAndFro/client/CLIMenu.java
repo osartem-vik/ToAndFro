@@ -1,6 +1,7 @@
 package com.ToAndFro.client;
 
 import com.ToAndFro.client.menuItem.*;
+import com.ToAndFro.exceptions.InvalidInputException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,28 +14,28 @@ public class CLIMenu {
     private static final Scanner scanner = new Scanner(System.in);
 
     private static final String INPUT_PATTERN = "^[1-9]$";
-    private static final String EXIT_KEY = "0";
+    private static final int EXIT_KEY = 0;
 
-    private Map<String, MenuCommand> menuItems = Map.of(
-            "1", new LoginCommand(),
-            "2", new ListItemsCommand(),
-            "3", new ViewItemCommand(),
-            "4", new BuyItemCommand(),
-            "5", new ProfileCommand(),
-            "6", new MyItemsCommand(),
-            "7", new AddItemCommand(),
-            "8", new RemoveItemCommand()
+    private Map<Integer, MenuCommand> menuItems = Map.of(
+            1, new LoginCommand(),
+            2, new ListItemsCommand(),
+            3, new ViewItemCommand(),
+            4, new BuyItemCommand(),
+            5, new ProfileCommand(),
+            6, new MyItemsCommand(),
+            7, new AddItemCommand(),
+            8, new RemoveItemCommand()
     );
 
     public void run() {
         boolean isRunnable = true;
         while (isRunnable) {
             showMenu();
-            String key = readMenuChoice();
-            Set<String> mapKeys = menuItems.keySet();
+            int key = readMenuChoice();
+            Set<Integer> mapKeys = menuItems.keySet();
             if (mapKeys.contains(key)) {
                 executeCommand(key);
-            } else if (key.equals(EXIT_KEY)) {
+            } else if (key == EXIT_KEY) {
                 isRunnable = false;
                 LOGGER.info("User exited");
             } else {
@@ -44,18 +45,23 @@ public class CLIMenu {
         }
     }
 
-    private String readMenuChoice() {
+    private int readMenuChoice() {
         System.out.print("Enter your choice: ");
-        return scanner.nextLine().trim();
+        if (scanner.hasNextInt()) {
+            return scanner.nextInt();
+        } else {
+            throw new InvalidInputException("Input must be a number");
+        }
     }
 
-    private void executeCommand(String key) {
+    private void executeCommand(int key) {
         menuItems.get(key).execute();
         pressEnterToContinue();
     }
 
     private void pressEnterToContinue() {
         System.out.println("Press enter to continue");
+        scanner.nextLine();
         scanner.nextLine();
     }
 
