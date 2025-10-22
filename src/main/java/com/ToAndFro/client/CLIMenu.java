@@ -1,7 +1,6 @@
 package com.ToAndFro.client;
 
 import com.ToAndFro.client.menuItem.*;
-import com.ToAndFro.exceptions.InvalidInputException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,11 +46,7 @@ public class CLIMenu {
 
     private int readMenuChoice() {
         System.out.print("Enter your choice: ");
-        if (scanner.hasNextInt()) {
-            return scanner.nextInt();
-        } else {
-            throw new InvalidInputException("Input must be a number");
-        }
+        return scanner.nextInt();
     }
 
     private void executeCommand(int key) {
