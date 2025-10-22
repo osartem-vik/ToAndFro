@@ -9,6 +9,10 @@ import java.util.Scanner;
 
 public class CLIMenu {
     private static final Logger LOGGER = LoggerFactory.getLogger(CLIMenu.class);
+    private static final String INPUT_PATTERN = "^[1-9]$";
+    private static final int EXIT_KEY = 9;
+    private static final int WRONG_INPUT_KEY = -1;
+
 
     private Map<Integer, MenuCommand> menuItems = Map.of(
             1, new LoginCommand(),
@@ -27,48 +31,43 @@ public class CLIMenu {
         while (isRunnable) {
             showMenu();
             int key = readMenuChoice(scanner);
-            if (key == 9) {
+            if (key == EXIT_KEY) {
                 isRunnable = false;
                 LOGGER.info("User exited");
-            } else if (key == -1) {
-                continue;
-            } else {
+            } else if (key != WRONG_INPUT_KEY) {
                 executeCommand(key, scanner);
             }
         }
     }
 
-    public int readMenuChoice(Scanner scanner) {
-        String inputPattern = "^[1-9]$";
+    private int readMenuChoice(Scanner scanner) {
         System.out.print("Enter your choice: ");
         String input = scanner.nextLine();
-        boolean isValid = input.matches(inputPattern);
+        boolean isValid = input.matches(INPUT_PATTERN);
         if (isValid) {
             return Integer.parseInt(input);
         } else {
             System.out.println("Invalid input");
-            LOGGER.warn("Invalid input");
-            LOGGER.debug(input + " is not in a " + inputPattern);
-            return -1;
+            LOGGER.warn("Invalid input: {} is not in {}", input, INPUT_PATTERN);
+            return WRONG_INPUT_KEY;
         }
     }
 
-    public void executeCommand(int key, Scanner scanner) {
-        MenuCommand command = menuItems.get(key);
-        command.execute();
+    private void executeCommand(int key, Scanner scanner) {
+        menuItems.get(key).execute();
         pressEnterToContinue(scanner);
     }
 
-    public void pressEnterToContinue(Scanner scanner) {
+    private void pressEnterToContinue(Scanner scanner) {
         System.out.println("Press enter to continue");
         scanner.nextLine();
     }
 
-    public void showMenu() {
+    private void showMenu() {
         System.out.println("=== Menu ===");
         menuItems.keySet().stream()
                 .sorted()
                 .forEach(key -> System.out.println(key + ". " + menuItems.get(key).getName()));
-        System.out.println("9. Exit");
+        System.out.println(EXIT_KEY + ". Exit");
     }
 }
