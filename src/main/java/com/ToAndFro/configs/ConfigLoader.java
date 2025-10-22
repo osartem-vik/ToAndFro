@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigLoader {
-    private final static Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ConfigLoader.class);
     private static Properties properties;
     private final static String PATH_OF_PROPERTIES = "app.properties";
     private static final ConfigLoader INSTANCE = new ConfigLoader();
@@ -21,9 +21,9 @@ public class ConfigLoader {
             if (input == null)
                 throw new ConfigFileNotFoundException("Unable to find a file with properties");
             properties.load(input);
-            logger.info("Configuration loaded successfully");
+            LOGGER.info("Configuration loaded successfully");
         } catch (IOException ex) {
-            logger.error("Error loading config", ex);
+            LOGGER.error("Error loading config", ex);
             new ConfigLoadingException("Error loading config", ex);
         }
     }
