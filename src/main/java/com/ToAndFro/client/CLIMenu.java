@@ -27,9 +27,10 @@ public class CLIMenu {
         while (isRunnable) {
             showMenu();
             int key = readMenuChoice(scanner);
-
-            if(key == 9) {
+            if (key == 9) {
                 isRunnable = false;
+            } else if (key == -1) {
+                continue;
             } else {
                 executeCommand(key, scanner);
             }
@@ -37,22 +38,16 @@ public class CLIMenu {
     }
 
     public int readMenuChoice(Scanner scanner) {
-        while (true) {
-            System.out.print("Enter your choice: ");
-            String input = scanner.nextLine();
-
-            try {
-                int choice = Integer.parseInt(input);
-                if (!menuItems.containsKey(choice)) {
-                    System.out.println("Invalid key! Enter valid menu option.");
-                    logger.warn("Invalid key: no such menu option.");
-                    continue;
-                }
-                return choice;
-            } catch (Exception e) {
-                System.out.println("Invalid input! Enter a number.");
-                logger.error("Invalid input: is not a number.");
-            }
+        String inputPattern = "^[1-9]$";
+        System.out.print("Enter your choice: ");
+        String input = scanner.nextLine();
+        boolean isValid = input.matches(inputPattern);
+        if (isValid) {
+            return Integer.parseInt(input);
+        } else {
+            System.out.println("Invalid input");
+            logger.warn("Invalid input");
+            return -1;
         }
     }
 
