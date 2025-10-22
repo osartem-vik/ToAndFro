@@ -12,7 +12,6 @@ public class CLIMenu {
     private static final Logger LOGGER = LoggerFactory.getLogger(CLIMenu.class);
     private static final Scanner scanner = new Scanner(System.in);
 
-    private static final String INPUT_PATTERN = "^[1-9]$";
     private static final int EXIT_KEY = 0;
 
     private Map<Integer, MenuCommand> menuItems = Map.of(
@@ -39,7 +38,7 @@ public class CLIMenu {
                 LOGGER.info("User exited");
             } else {
                 System.out.println("Invalid input");
-                LOGGER.warn("Invalid input: {} is not in {}", key, INPUT_PATTERN);
+                LOGGER.warn("Input is not a valid number");
             }
         }
     }
