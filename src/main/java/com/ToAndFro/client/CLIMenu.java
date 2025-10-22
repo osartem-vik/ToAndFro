@@ -18,16 +18,21 @@ public class CLIMenu {
             5, new ProfileCommand(),
             6, new MyItemsCommand(),
             7, new AddItemCommand(),
-            8, new RemoveItemCommand(),
-            9, new ExitCommand()
+            8, new RemoveItemCommand()
     );
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        while (true) {
+        boolean isRunnable = true;
+        while (isRunnable) {
             showMenu();
             int key = readMenuChoice(scanner);
-            executeCommand(key, scanner);
+
+            if(key == 9) {
+                isRunnable = false;
+            } else {
+                executeCommand(key, scanner);
+            }
         }
     }
 
@@ -67,5 +72,6 @@ public class CLIMenu {
         menuItems.keySet().stream()
                 .sorted()
                 .forEach(key -> System.out.println(key + ". " + menuItems.get(key).getName()));
+        System.out.println("9. Exit");
     }
 }
