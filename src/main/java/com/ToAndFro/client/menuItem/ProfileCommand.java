@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ProfileCommand extends MenuCommand {
-    private static final Logger logger = LoggerFactory.getLogger(ProfileCommand.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProfileCommand.class);
 
     public ProfileCommand() {
         super("My profile");
@@ -13,6 +13,6 @@ public class ProfileCommand extends MenuCommand {
     @Override
     public void execute() {
         System.out.println("* Profile info *");
-        logger.debug("Profile opened");
+        LOGGER.debug("Profile opened");
     }
 }

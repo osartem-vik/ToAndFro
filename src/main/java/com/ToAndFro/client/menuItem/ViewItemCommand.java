@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ViewItemCommand extends MenuCommand {
-    private static final Logger logger = LoggerFactory.getLogger(ViewItemCommand.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ViewItemCommand.class);
 
     public ViewItemCommand() {
         super("View item details");
@@ -13,6 +13,6 @@ public class ViewItemCommand extends MenuCommand {
     @Override
     public void execute() {
         System.out.println("* Item info *");
-        logger.debug("Item info");
+        LOGGER.debug("Item info");
     }
 }

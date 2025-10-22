@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class CLIMenu {
-    private static final Logger logger = LoggerFactory.getLogger(CLIMenu.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CLIMenu.class);
 
     private Map<Integer, MenuCommand> menuItems = Map.of(
             1, new LoginCommand(),
@@ -29,6 +29,7 @@ public class CLIMenu {
             int key = readMenuChoice(scanner);
             if (key == 9) {
                 isRunnable = false;
+                LOGGER.info("User exited");
             } else if (key == -1) {
                 continue;
             } else {
@@ -46,7 +47,8 @@ public class CLIMenu {
             return Integer.parseInt(input);
         } else {
             System.out.println("Invalid input");
-            logger.warn("Invalid input");
+            LOGGER.warn("Invalid input");
+            LOGGER.debug(input + " is not in a " + inputPattern);
             return -1;
         }
     }

@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AddItemCommand extends MenuCommand {
-    private static final Logger logger = LoggerFactory.getLogger(AddItemCommand.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AddItemCommand.class);
 
     public AddItemCommand() {
         super("Add item");
@@ -15,6 +15,6 @@ public class AddItemCommand extends MenuCommand {
         //value = console.getValue();
         //value pass to service();
         System.out.println("Product created");
-        logger.info("Product created");
+        LOGGER.info("Product created");
     }
 }

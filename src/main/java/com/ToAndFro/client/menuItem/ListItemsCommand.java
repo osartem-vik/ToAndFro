@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ListItemsCommand extends MenuCommand {
-    private static final Logger logger = LoggerFactory.getLogger(ListItemsCommand.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ListItemsCommand.class);
 
     public ListItemsCommand() {
         super("List all items");
@@ -13,6 +13,6 @@ public class ListItemsCommand extends MenuCommand {
     @Override
     public void execute() {
         System.out.println("* List of all products *");
-        logger.debug("All items list");
+        LOGGER.debug("All items list");
     }
 }

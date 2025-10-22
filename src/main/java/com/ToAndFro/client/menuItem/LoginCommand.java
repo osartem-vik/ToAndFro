@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LoginCommand extends MenuCommand {
-    private static final Logger logger = LoggerFactory.getLogger(LoginCommand.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginCommand.class);
 
     public LoginCommand() {
         super("Login");
@@ -13,6 +13,6 @@ public class LoginCommand extends MenuCommand {
     @Override
     public void execute() {
         System.out.println("Welcome! You successfully logged in");
-        logger.info("User logged in");
+        LOGGER.info("User logged in");
     }
 }
