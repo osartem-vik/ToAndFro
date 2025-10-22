@@ -9,10 +9,11 @@ import java.util.Scanner;
 
 public class CLIMenu {
     private static final Logger LOGGER = LoggerFactory.getLogger(CLIMenu.class);
+    private static final Scanner scanner = new Scanner(System.in);
+
     private static final String INPUT_PATTERN = "^[1-9]$";
     private static final int EXIT_KEY = 9;
     private static final int WRONG_INPUT_KEY = -1;
-
 
     private Map<Integer, MenuCommand> menuItems = Map.of(
             1, new LoginCommand(),
@@ -26,7 +27,6 @@ public class CLIMenu {
     );
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         boolean isRunnable = true;
         while (isRunnable) {
             showMenu();
