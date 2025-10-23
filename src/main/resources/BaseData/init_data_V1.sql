@@ -1,77 +1,84 @@
-CREATE TABLE user (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-lastname VARCHAR(50) NOT NULL,
-firstname VARCHAR(50) NOT NULL,
-email VARCHAR(350) NOT NULL UNIQUE,
-password_hash VARCHAR(255) NOT NULL,
-phone VARCHAR(50) NOT NULL,
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE user
+(
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    lastname      VARCHAR(50)  NOT NULL,
+    firstname     VARCHAR(50)  NOT NULL,
+    email         VARCHAR(350) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    phone         VARCHAR(50)  NOT NULL,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE region (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(100) NOT NULL
+CREATE TABLE region
+(
+    id   BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE city (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(100) NOT NULL,
-region_id BIGINT,
-FOREIGN KEY (region_id) REFERENCES region(id) ON DELETE SET NULL
+CREATE TABLE city
+(
+    id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name      VARCHAR(100) NOT NULL,
+    region_id BIGINT,
+    FOREIGN KEY (region_id) REFERENCES region (id) ON DELETE SET NULL
 );
 
-CREATE TABLE listings (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-user_id BIGINT NOT NULL,
-    category ENUM(
-        'Транспорт',
-        'Нерухомість',
-        'Електроніка',
-        'Дім і сад',
-        'Робота',
-        'Послуги',
-        'Мода',
-        'Тварини'
-    ) NOT NULL,
-city_id BIGINT NOT NULL,
-title VARCHAR(255) NOT NULL,
-description TEXT,
-price DECIMAL(10,2) NOT NULL,
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-status ENUM('active', 'pending', 'sold', 'archived') NOT NULL DEFAULT 'active',
-FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-FOREIGN KEY (city_id) REFERENCES city(id) ON DELETE CASCADE
+CREATE TABLE listings
+(
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id     BIGINT                                        NOT NULL,
+    category    ENUM('Транспорт',
+                    'Нерухомість',
+                    'Електроніка',
+                    'Дім і сад',
+                    'Робота',
+                    'Послуги',
+                    'Мода',
+                    'Тварини')                                NOT NULL,
+    city_id     BIGINT                                        NOT NULL,
+    title       VARCHAR(255)                                  NOT NULL,
+    description TEXT,
+    price       DECIMAL(10, 2)                                NOT NULL,
+    created_at  TIMESTAMP                                              DEFAULT CURRENT_TIMESTAMP,
+    status      ENUM('active', 'pending', 'sold', 'archived') NOT NULL DEFAULT 'active',
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
+    FOREIGN KEY (city_id) REFERENCES city (id) ON DELETE CASCADE
 );
 
-CREATE TABLE images (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-path VARCHAR(255) NOT NULL,
-listing_id BIGINT NOT NULL,
-FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE
+CREATE TABLE images
+(
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    path       VARCHAR(255) NOT NULL,
+    listing_id BIGINT       NOT NULL,
+    FOREIGN KEY (listing_id) REFERENCES listings (id) ON DELETE CASCADE
 );
 
-CREATE TABLE favorite (
-user_id BIGINT,
-listing_id BIGINT,
-PRIMARY KEY (user_id, listing_id),
-FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE
+CREATE TABLE favorite
+(
+    user_id    BIGINT,
+    listing_id BIGINT,
+    PRIMARY KEY (user_id, listing_id),
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
+    FOREIGN KEY (listing_id) REFERENCES listings (id) ON DELETE CASCADE
 );
 
-CREATE TABLE chat (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-listing_id BIGINT NOT NULL,
-buyer_id BIGINT NOT NULL,
-FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE,
-FOREIGN KEY (buyer_id) REFERENCES user(id) ON DELETE CASCADE
+CREATE TABLE chat
+(
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    listing_id BIGINT NOT NULL,
+    buyer_id   BIGINT NOT NULL,
+    FOREIGN KEY (listing_id) REFERENCES listings (id) ON DELETE CASCADE,
+    FOREIGN KEY (buyer_id) REFERENCES user (id) ON DELETE CASCADE
 );
 
-CREATE TABLE chat_messages (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-sender_id BIGINT NOT NULL,
-chat_id BIGINT NOT NULL,
-text TEXT NOT NULL,
-timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-FOREIGN KEY (chat_id) REFERENCES chat(id) ON DELETE CASCADE
+CREATE TABLE chat_messages
+(
+    id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+    sender_id BIGINT NOT NULL,
+    chat_id   BIGINT NOT NULL,
+    text      TEXT   NOT NULL,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (chat_id) REFERENCES chat (id) ON DELETE    CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES user (id) ON DELETE  CASCADE
 );
     
