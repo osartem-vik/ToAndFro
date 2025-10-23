@@ -12,12 +12,12 @@ import java.util.Properties;
 public class ConfigLoader {
     private final static Logger LOGGER = LoggerFactory.getLogger(ConfigLoader.class);
     private static Properties properties;
-    private final static String PATH_OF_PROPERTIES = "app.properties";
+    private final static String CONFIG_FILE = "app.properties";
     private static final ConfigLoader INSTANCE = new ConfigLoader();
 
     private ConfigLoader() {
         this.properties = new Properties();
-        try (InputStream input = ConfigLoader.class.getClassLoader().getResourceAsStream(PATH_OF_PROPERTIES)) {
+        try (InputStream input = ConfigLoader.class.getClassLoader().getResourceAsStream(CONFIG_FILE)) {
             if (input == null) {
                 throw new ConfigFileNotFoundException("Unable to find a file with properties");
             }
