@@ -17,11 +17,11 @@ import java.time.LocalDateTime;
 public class Listing {
     private Long id;
     private Long userId;
-    private Long categoryId;
+    private Category category;
     private Long cityId;
     private String title;
     private String description;
     private BigDecimal price;
     private LocalDateTime createdAt;
-    private String status;
+    private Status status;
 }
