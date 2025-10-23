@@ -13,6 +13,11 @@ public class ConfigLoader {
     private final static Logger LOGGER = LoggerFactory.getLogger(ConfigLoader.class);
     private static Properties properties;
     private final static String CONFIG_FILE = "app.properties";
+    private final static String DB_URL = "db.url";
+    private final static String DB_USER = "db.username";
+    private final static String DB_PASS = "db.password";
+    private final static String DB_DRV = "db.driver";
+
     private static final ConfigLoader INSTANCE = new ConfigLoader();
 
     private ConfigLoader() {
@@ -34,18 +39,18 @@ public class ConfigLoader {
     }
 
     public static String getDBUrl() {
-        return properties.getProperty("db.url");
+        return properties.getProperty(DB_URL);
     }
 
     public static String getDBUserName() {
-        return properties.getProperty("db.username");
+        return properties.getProperty(DB_USER);
     }
 
     public static String getDBPassword() {
-        return properties.getProperty("db.password");
+        return properties.getProperty(DB_PASS);
     }
 
     public static String getDBDriver() {
-        return properties.getProperty("db.driver");
+        return properties.getProperty(DB_DRV);
     }
 }
