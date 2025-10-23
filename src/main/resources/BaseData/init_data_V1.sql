@@ -20,17 +20,19 @@ region_id BIGINT,
 FOREIGN KEY (region_id) REFERENCES region(id) ON DELETE SET NULL
 );
 
-CREATE TABLE categories(
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(100),
-parent_id BIGINT DEFAULT NULL,
-FOREIGN KEY (parent_id) REFERENCES categories(id) ON DELETE SET NULL
-);
-
 CREATE TABLE listings (
 id BIGINT AUTO_INCREMENT PRIMARY KEY,
 user_id BIGINT NOT NULL,
-category_id BIGINT NOT NULL,
+    category ENUM(
+        'Транспорт',
+        'Нерухомість',
+        'Електроніка',
+        'Дім і сад',
+        'Робота',
+        'Послуги',
+        'Мода',
+        'Тварини'
+    ) NOT NULL,
 city_id BIGINT NOT NULL,
 title VARCHAR(255) NOT NULL,
 description TEXT,
@@ -38,7 +40,6 @@ price DECIMAL(10,2) NOT NULL,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 status ENUM('active', 'pending', 'sold', 'archived') NOT NULL DEFAULT 'active',
 FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
 FOREIGN KEY (city_id) REFERENCES city(id) ON DELETE CASCADE
 );
 
@@ -73,5 +74,4 @@ text TEXT NOT NULL,
 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (chat_id) REFERENCES chat(id) ON DELETE CASCADE
 );
-
-
+    
