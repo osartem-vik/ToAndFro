@@ -8,11 +8,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JdbcConnectionFactory {
+    private static ConfigLoader configLoader = ConfigLoader.getInstance();
     private final static Logger LOGGER = LoggerFactory.getLogger(JdbcConnectionFactory.class);
-    private final static String URL = ConfigLoader.getDBUrl();
-    private final static String USERNAME = ConfigLoader.getDBUserName();
-    private final static String PASSWORD = ConfigLoader.getDBPassword();
-    private final static String DRIVER = ConfigLoader.getDBDriver();
+    private final static String URL = configLoader.getDBUrl();
+    private final static String USERNAME = configLoader.getDBUserName();
+    private final static String PASSWORD = configLoader.getDBPassword();
+    private final static String DRIVER = configLoader.getDBDriver();
     private static volatile Connection connection;
 
     public static Connection getConnection() throws SQLException {
