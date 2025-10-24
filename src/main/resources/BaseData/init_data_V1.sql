@@ -3,7 +3,7 @@ CREATE TABLE user
     id            BIGINT AUTO_INCREMENT PRIMARY KEY,
     lastname      VARCHAR(50)  NOT NULL,
     firstname     VARCHAR(50)  NOT NULL,
-    email         VARCHAR(350) NOT NULL UNIQUE,
+    email         VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     phone         VARCHAR(50)  NOT NULL,
     created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -23,7 +23,7 @@ CREATE TABLE city
     FOREIGN KEY (region_id) REFERENCES region (id) ON DELETE SET NULL
 );
 
-CREATE TABLE listings
+CREATE TABLE listing
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id     BIGINT                                        NOT NULL,
@@ -45,12 +45,12 @@ CREATE TABLE listings
     FOREIGN KEY (city_id) REFERENCES city (id) ON DELETE CASCADE
 );
 
-CREATE TABLE images
+CREATE TABLE image
 (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
     path       VARCHAR(255) NOT NULL,
     listing_id BIGINT       NOT NULL,
-    FOREIGN KEY (listing_id) REFERENCES listings (id) ON DELETE CASCADE
+    FOREIGN KEY (listing_id) REFERENCES listing (id) ON DELETE CASCADE
 );
 
 CREATE TABLE favorite
@@ -59,7 +59,7 @@ CREATE TABLE favorite
     listing_id BIGINT,
     PRIMARY KEY (user_id, listing_id),
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
-    FOREIGN KEY (listing_id) REFERENCES listings (id) ON DELETE CASCADE
+    FOREIGN KEY (listing_id) REFERENCES listing (id) ON DELETE CASCADE
 );
 
 CREATE TABLE chat
@@ -67,11 +67,11 @@ CREATE TABLE chat
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
     listing_id BIGINT NOT NULL,
     buyer_id   BIGINT NOT NULL,
-    FOREIGN KEY (listing_id) REFERENCES listings (id) ON DELETE CASCADE,
+    FOREIGN KEY (listing_id) REFERENCES listing (id) ON DELETE CASCADE,
     FOREIGN KEY (buyer_id) REFERENCES user (id) ON DELETE CASCADE
 );
 
-CREATE TABLE chat_messages
+CREATE TABLE chat_message
 (
     id        BIGINT AUTO_INCREMENT PRIMARY KEY,
     sender_id BIGINT NOT NULL,
