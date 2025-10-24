@@ -2,11 +2,11 @@ package com.ToAndFro.models;
 
 public enum Category {
     TRANSPORT,
-    REAL_ESTATE,
+    IMMOBILITY,
     ELECTRONICS,
-    HOME_GARDEN,
-    JOB,
+    HOME,
+    WORK,
     SERVICES,
     FASHION,
-    ANIMALS;
+    ANIMALS
 }
