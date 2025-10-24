@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class ConfigLoader {
     private final static Logger LOGGER = LoggerFactory.getLogger(ConfigLoader.class);
-    private static Properties properties;
+    private Properties properties;
     private final static String CONFIG_FILE = "app.properties";
     private final static String DB_URL = "db.url";
     private final static String DB_USER = "db.username";
@@ -38,19 +38,19 @@ public class ConfigLoader {
         return INSTANCE;
     }
 
-    public static String getDBUrl() {
+    public  String getDBUrl() {
         return properties.getProperty(DB_URL);
     }
 
-    public static String getDBUserName() {
+    public  String getDBUserName() {
         return properties.getProperty(DB_USER);
     }
 
-    public static String getDBPassword() {
+    public  String getDBPassword() {
         return properties.getProperty(DB_PASS);
     }
 
-    public static String getDBDriver() {
+    public  String getDBDriver() {
         return properties.getProperty(DB_DRV);
     }
 }
