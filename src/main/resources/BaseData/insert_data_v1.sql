@@ -92,7 +92,7 @@ INSERT INTO city (name, region_id) VALUES
 ('Київ', 9);
 
 -- 1) Иван Петренко — Легкові автомобілі — Бровари
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'ivan.petrenko@gmail.com' LIMIT 1),
   ('TRANSPORT'),
@@ -102,13 +102,13 @@ VALUES (
   8500.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 2) Олена Шевченко — Квартири — Львів
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'olena.shevchenko@yahoo.com' LIMIT 1),
   ('IMMOBILITY'),
@@ -118,13 +118,13 @@ VALUES (
   47000.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 3) Андрій Коваль — Смартфони — Дніпро
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'andriy.koval@ukr.net' LIMIT 1),
   ('ELECTRONICS'),
@@ -134,13 +134,13 @@ VALUES (
   19500.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 4) Марія Бондар — Меблі — Івано-Франківськ
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'maria.bondar@gmail.com' LIMIT 1),
   ('HOME'),
@@ -150,13 +150,13 @@ VALUES (
   8500.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 5) Сергій Кравець — Собаки — Харків
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'serhii.kravets@meta.ua' LIMIT 1),
   ('ANIMALS'),
@@ -166,13 +166,13 @@ VALUES (
   7000.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 6) Ірина Романова — Комп’ютери та ноутбуки — Київ
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'iryna.romanova@gmail.com' LIMIT 1),
   ('ELECTRONICS'),
@@ -182,13 +182,13 @@ VALUES (
   21500.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 7) Ірина Романова — Телевізори та аудіо — Біла Церква
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'iryna.romanova@gmail.com' LIMIT 1),
   ('ELECTRONICS'),
@@ -198,13 +198,13 @@ VALUES (
   11500.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 8) Олег Данченко — Будинки — Одеса
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'oleh.danchenko@icloud.com' LIMIT 1),
   ('IMMOBILITY'),
@@ -214,13 +214,13 @@ VALUES (
   155000.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 9) Олег Данченко — Інструменти — Запоріжжя
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'oleh.danchenko@icloud.com' LIMIT 1),
   ('HOME'),
@@ -230,13 +230,13 @@ VALUES (
   3200.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 10) Катерина Мельник — Одяг — Чернігів
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'kateryna.melnyk@gmail.com' LIMIT 1),
   ('FASHION'),
@@ -246,13 +246,13 @@ VALUES (
   2800.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 11) Катерина Мельник — Аксесуари — Рівне
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'kateryna.melnyk@gmail.com' LIMIT 1),
   ('FASHION'),
@@ -262,13 +262,13 @@ VALUES (
   1600.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 12) Максим Голуб — Транспортні послуги — Полтава
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'maksym.holub@ukr.net' LIMIT 1),
   ('SERVICES'),
@@ -278,13 +278,13 @@ VALUES (
   20.00, NOW(), 'ACTIVE'  -- ціна за км
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 13) Максим Голуб — Мотоцикли — Кривий Ріг
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'maksym.holub@ukr.net' LIMIT 1),
   ('TRANSPORT'),
@@ -294,13 +294,13 @@ VALUES (
   135000.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 14) Максим Голуб — Оренда — Київ
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'maksym.holub@ukr.net' LIMIT 1),
   ('TRANSPORT'),
@@ -310,13 +310,13 @@ VALUES (
   18000.00, NOW(), 'ACTIVE'  -- ціна за місяць
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 15) Софія Ткач — ІТ та комп’ютери — Черкаси (вакансія)
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'sofia.tkach@gmail.com' LIMIT 1),
   ('WORK'),
@@ -326,13 +326,13 @@ VALUES (
   25000.00, NOW(), 'ACTIVE'  -- зарплата/міс.
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 16) Софія Ткач — Краса та здоров’я — Хмельницький
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'sofia.tkach@gmail.com' LIMIT 1),
   ('SERVICES'),
@@ -342,13 +342,13 @@ VALUES (
   900.00, NOW(), 'ACTIVE'  -- ціна за процедуру
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
 
 -- 17) Софія Ткач — Взуття — Чернівці
-INSERT INTO listings (user_id, category, city_id, title, description, price, created_at, status)
+INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES (
   (SELECT id FROM user WHERE email = 'sofia.tkach@gmail.com' LIMIT 1),
   ('FASHION'),
@@ -358,7 +358,7 @@ VALUES (
   1900.00, NOW(), 'ACTIVE'
 );
 SET @listing_id := LAST_INSERT_ID();
-INSERT INTO images (path, listing_id) VALUES
+INSERT INTO image (path, listing_id) VALUES
   (CONCAT('resources/images/listings/', @listing_id, '/image1'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image2'), @listing_id),
   (CONCAT('resources/images/listings/', @listing_id, '/image3'), @listing_id);
@@ -367,36 +367,36 @@ INSERT INTO images (path, listing_id) VALUES
 INSERT INTO favorite (user_id, listing_id) VALUES
 -- 1) Ivan Petrenko favorites listings not his own (Olena + Andriy)
 ((SELECT id FROM user WHERE email = 'ivan.petrenko@gmail.com' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'olena.shevchenko@yahoo.com' LIMIT 1)),
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'olena.shevchenko@yahoo.com' LIMIT 1)),
 ((SELECT id FROM user WHERE email = 'ivan.petrenko@gmail.com' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'andriy.koval@ukr.net' LIMIT 1)),
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'andriy.koval@ukr.net' LIMIT 1)),
 
 -- 2) Olena Shevchenko favorites one listing (Serhii)
 ((SELECT id FROM user WHERE email = 'olena.shevchenko@yahoo.com' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'serhii.kravets@meta.ua' LIMIT 1)),
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'serhii.kravets@meta.ua' LIMIT 1)),
 
 -- 3) Andriy Koval favorites one listing (Maria)
 ((SELECT id FROM user WHERE email = 'andriy.koval@ukr.net' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'maria.bondar@gmail.com' LIMIT 1)),
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'maria.bondar@gmail.com' LIMIT 1)),
 
 -- 4) Maria Bondar favorites one listing (Oleh)
 ((SELECT id FROM user WHERE email = 'maria.bondar@gmail.com' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'oleh.danchenko@icloud.com' LIMIT 1)),
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'oleh.danchenko@icloud.com' LIMIT 1)),
 
 -- 5) Serhii Kravets favorites multiple (Iryna + Kateryna)
 ((SELECT id FROM user WHERE email = 'serhii.kravets@meta.ua' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'iryna.romanova@gmail.com' LIMIT 1)),
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'iryna.romanova@gmail.com' LIMIT 1)),
 ((SELECT id FROM user WHERE email = 'serhii.kravets@meta.ua' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'kateryna.melnyk@gmail.com' LIMIT 1)),
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'kateryna.melnyk@gmail.com' LIMIT 1)),
 
 -- 6) Kateryna Melnyk favorites one listing (Sofiia)
 ((SELECT id FROM user WHERE email = 'kateryna.melnyk@gmail.com' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'sofia.tkach@gmail.com' LIMIT 1)),
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'sofia.tkach@gmail.com' LIMIT 1)),
 
 -- 7) Maksym Holub favorites one listing (Ivan)
 ((SELECT id FROM user WHERE email = 'maksym.holub@ukr.net' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'ivan.petrenko@gmail.com' LIMIT 1)),
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'ivan.petrenko@gmail.com' LIMIT 1)),
 
 -- 8) Sofiia Tkach favorites one listing (Maria)
 ((SELECT id FROM user WHERE email = 'sofia.tkach@gmail.com' LIMIT 1),
- (SELECT l.id FROM listings l JOIN user u ON l.user_id = u.id WHERE u.email = 'maria.bondar@gmail.com' LIMIT 1));
+ (SELECT l.id FROM listing l JOIN user u ON l.user_id = u.id WHERE u.email = 'maria.bondar@gmail.com' LIMIT 1));
