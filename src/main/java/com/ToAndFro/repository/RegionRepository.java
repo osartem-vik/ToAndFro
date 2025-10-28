@@ -31,8 +31,8 @@ public class RegionRepository {
     }
 
     public void save(Region region) {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SAVE_REGION_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SAVE_REGION_QUERY)) {
             setRegionParams(region, preparedStatement);
 
             int res = preparedStatement.executeUpdate();
@@ -48,8 +48,8 @@ public class RegionRepository {
     }
 
     public void update(Region region) {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_REGION_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_REGION_QUERY)) {
             setRegionParams(region, preparedStatement);
 
             int idIndex = 2;
@@ -68,8 +68,8 @@ public class RegionRepository {
     }
 
     public void delete(Long id) {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REGION_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REGION_QUERY)) {
 
             int idIndex = 1;
             preparedStatement.setLong(idIndex, id);
@@ -87,8 +87,8 @@ public class RegionRepository {
     }
 
     public Region findById(Long id) {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_REGION_BY_ID_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_REGION_BY_ID_QUERY)) {
 
             int idIndex = 1;
             preparedStatement.setLong(idIndex, id);
@@ -111,8 +111,8 @@ public class RegionRepository {
     }
 
     public List<Region> findAll() {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_REGION_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_REGION_QUERY)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

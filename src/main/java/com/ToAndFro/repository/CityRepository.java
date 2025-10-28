@@ -34,8 +34,8 @@ public class CityRepository {
     }
 
     public void save(City city) {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SAVE_CITY_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SAVE_CITY_QUERY)) {
             setCityParams(city, preparedStatement);
 
             int res = preparedStatement.executeUpdate();
@@ -51,8 +51,8 @@ public class CityRepository {
     }
 
     public void update(City city) {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CITY_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CITY_QUERY)) {
             setCityParams(city, preparedStatement);
 
             int idIndex = 3;
@@ -71,8 +71,8 @@ public class CityRepository {
     }
 
     public void delete(Long id) {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CITY_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CITY_QUERY)) {
 
             int idIndex = 1;
             preparedStatement.setLong(idIndex, id);
@@ -90,8 +90,8 @@ public class CityRepository {
     }
 
     public City findById(Long id) {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_CITY_BY_ID_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_CITY_BY_ID_QUERY)) {
 
             int idIndex = 1;
             preparedStatement.setLong(idIndex, id);
@@ -114,8 +114,8 @@ public class CityRepository {
     }
 
     public List<City> findAll() {
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_CITY_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_CITY_QUERY)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
