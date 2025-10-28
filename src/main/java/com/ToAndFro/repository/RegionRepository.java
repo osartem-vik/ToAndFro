@@ -106,9 +106,9 @@ public class RegionRepository {
     public List<Region> findAll() {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_REGION_QUERY);
-            preparedStatement.execute();
 
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
             List<Region> regions = new ArrayList<>();
             while (resultSet.next()) {
                 regions.add(regionMapper.createRegion(resultSet));

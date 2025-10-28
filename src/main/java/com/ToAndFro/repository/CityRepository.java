@@ -2,12 +2,14 @@ package com.ToAndFro.repository;
 
 import com.ToAndFro.configs.JDBCConnectionFactory;
 import com.ToAndFro.exceptions.CitySqlException;
+import com.ToAndFro.mapper.CityMapper;
 import com.ToAndFro.models.City;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CityRepository {
@@ -15,7 +17,9 @@ public class CityRepository {
     private final String SAVE_CITY_QUERY = "INSERT INTO city(name, regionId) VALUES (?, ?)";
     private final String UPDATE_CITY_QUERY = "UPDATE city SET name = ?, regionId = ? WHERE id = ?";
     private final String DELETE_CITY_QUERY = "DELETE FROM city WHERE id = ?";
+    private final String FIND_CITY_BY_ID_QUERY = "SELECT * FROM city WHERE id = ?";
 
+    private CityMapper cityMapper = new CityMapper();
     private final int noChangedRows = 0;
 
     private void setCityParams(City city, PreparedStatement statement) throws SQLException {
@@ -24,7 +28,7 @@ public class CityRepository {
     }
 
     public void save(City city) {
-        try(Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SAVE_CITY_QUERY);
             setCityParams(city, preparedStatement);
 
@@ -41,7 +45,7 @@ public class CityRepository {
     }
 
     public void update(City city) {
-        try(Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CITY_QUERY);
             setCityParams(city, preparedStatement);
             preparedStatement.setLong(3, city.getId());
@@ -59,7 +63,7 @@ public class CityRepository {
     }
 
     public void delete(Long id) {
-        try(Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CITY_QUERY);
             preparedStatement.setLong(1, id);
 
@@ -72,6 +76,28 @@ public class CityRepository {
         } catch (SQLException e) {
             LOGGER.error("Error deleting city: {}", e.getMessage());
             throw new CitySqlException("Error deleting city", e);
+        }
+    }
+
+    public City findById(Long id) {
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_CITY_BY_ID_QUERY);
+            preparedStatement.setLong(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            City city;
+            if (resultSet.next()) {
+                city = cityMapper.createCity(resultSet);
+            } else {
+                LOGGER.error("No city found with id: {}", id);
+                throw new CitySqlException("No region found with id: " + id);
+            }
+            LOGGER.info("City found");
+            return city;
+        } catch (SQLException e) {
+            LOGGER.error("Error finding city with id {}: {}", id, e.getMessage());
+            throw new CitySqlException("Error finding city with id: " + id, e);
         }
     }
 }
