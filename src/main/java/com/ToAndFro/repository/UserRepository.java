@@ -89,14 +89,7 @@ public class UserRepository {
             User user;
 
             if(rs.next()){
-                user = userMapper.createUser(
-                        rs.getLong("id"),
-                        rs.getString("lastname"),
-                        rs.getString("firstname"),
-                        rs.getString("email"),
-                        rs.getString("password_hash"),
-                        rs.getString("phone")
-                );
+                user = userMapper.createUser(rs);
             } else {
                 throw new UserSqlException("No user found with id: " + userId);
             }
@@ -117,14 +110,7 @@ public class UserRepository {
             List<User> users = new java.util.ArrayList<>();
 
             while(rs.next()){
-                User user = userMapper.createUser(
-                        rs.getLong("id"),
-                        rs.getString("lastname"),
-                        rs.getString("firstname"),
-                        rs.getString("email"),
-                        rs.getString("password_hash"),
-                        rs.getString("phone")
-                );
+                User user = userMapper.createUser(rs);
                 users.add(user);
             }
 
