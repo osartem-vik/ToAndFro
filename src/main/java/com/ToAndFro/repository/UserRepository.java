@@ -37,7 +37,6 @@ public class UserRepository {
         ps.setString(5, user.getPhone());
     }
 
-
     public void save(User user) {
         LOGGER.info("Method save called for user with email: {}", user.getEmail());
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
@@ -63,7 +62,9 @@ public class UserRepository {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement ps = connection.prepareStatement(USER_UPDATE_QUERY);
             setUserParams(ps, user);
-            ps.setLong(6, user.getId());
+
+            int id_number = 6;
+            ps.setLong(id_number, user.getId());
 
             int result = ps.executeUpdate();
             if (result == 0){
@@ -84,7 +85,8 @@ public class UserRepository {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(USER_DELETE_QUERY)) {
 
-            ps.setLong(1, userId);
+            int id_index = 1;
+            ps.setLong(id_index, userId);
 
             int result = ps.executeUpdate();
 
@@ -106,13 +108,14 @@ public class UserRepository {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(USER_FIND_BY_ID_QUERY)) {
 
-            ps.setLong(1, userId);
+            int id_index = 1;
+            ps.setLong(id_index, userId);
 
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()){
                 LOGGER.info("User found with id: {}", userId);
-                return userMapper.createUser(rs);
+                return userMapper.mapToUser(rs);
             } else {
                 LOGGER.warn("User not found with id: {}", userId);
                 throw new UserSqlException("No user found with id: " + userId);
@@ -134,7 +137,7 @@ public class UserRepository {
             List<User> users = new java.util.ArrayList<>();
 
             while(rs.next()){
-                User user = userMapper.createUser(rs);
+                User user = userMapper.mapToUser(rs);
                 users.add(user);
             }
 
@@ -147,6 +150,4 @@ public class UserRepository {
             throw new UserSqlException("Error retrieving all users", e);
         }
     }
-
-
 }

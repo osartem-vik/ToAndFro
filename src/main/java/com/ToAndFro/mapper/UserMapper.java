@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class UserMapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserMapper.class);
 
-    public User createUser(ResultSet rs) throws SQLException {
+    public User mapToUser(ResultSet rs) throws SQLException {
         LOGGER.info("Mapping ResultSet to User object");
         return new User(
                 rs.getLong("id"),
