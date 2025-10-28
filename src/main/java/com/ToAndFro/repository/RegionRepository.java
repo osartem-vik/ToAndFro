@@ -14,6 +14,7 @@ public class RegionRepository {
     Logger LOGGER = LoggerFactory.getLogger(RegionRepository.class);
     private final String SAVE_REGION_QUERY = "INSERT INTO region (name) VALUES (?)";
     private final String UPDATE_REGION_QUERY = "UPDATE region SET name = ? WHERE id = ?";
+    private final String DELETE_REGION_QUERY = "DELETE FROM region WHERE id = ?";
 
     private final int noChangedRows = 0;
 
@@ -22,12 +23,12 @@ public class RegionRepository {
     }
 
     public void save(Region region) {
-        try(Connection connection = JDBCConnectionFactory.getInstance().getConnection()){
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SAVE_REGION_QUERY);
             setRegionParams(region, preparedStatement);
 
             int res = preparedStatement.executeUpdate();
-            if(res == noChangedRows) {
+            if (res == noChangedRows) {
                 LOGGER.error("Failed saving region");
                 throw new RegionSqlException("Failed saving region");
             }
@@ -39,13 +40,13 @@ public class RegionRepository {
     }
 
     public void update(Region region) {
-        try(Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_REGION_QUERY);
             setRegionParams(region, preparedStatement);
             preparedStatement.setLong(2, region.getId());
 
             int res = preparedStatement.executeUpdate();
-            if(res == noChangedRows) {
+            if (res == noChangedRows) {
                 LOGGER.error("Failed updating region");
                 throw new RegionSqlException("Failed updating region");
             }
@@ -53,6 +54,23 @@ public class RegionRepository {
         } catch (SQLException e) {
             LOGGER.error("Error updating region: {}", e.getMessage());
             throw new RegionSqlException("Error updating region", e);
+        }
+    }
+
+    public void delete(Long id) {
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REGION_QUERY);
+            preparedStatement.setLong(1, id);
+
+            int res = preparedStatement.executeUpdate();
+            if (res == noChangedRows) {
+                LOGGER.error("Failed deleting region");
+                throw new RegionSqlException("Failed deleting region");
+            }
+            LOGGER.info("Region deleted: {} rows affected", res);
+        } catch (SQLException e) {
+            LOGGER.error("Error deleting region: {}", e.getMessage());
+            throw new RegionSqlException("Error deleting region", e);
         }
     }
 }
