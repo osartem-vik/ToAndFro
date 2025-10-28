@@ -1,7 +1,7 @@
 package com.ToAndFro.repository;
 
 import com.ToAndFro.configs.JDBCConnectionFactory;
-import com.ToAndFro.exceptions.UserInsertException;
+import com.ToAndFro.exceptions.UserSqlException;
 import com.ToAndFro.mapper.UserMapper;
 import com.ToAndFro.models.User;
 
@@ -40,10 +40,10 @@ public class UserRepository {
             setUserParams(ps, user);
 
             int result = ps.executeUpdate();
-            if (result == 0) throw new UserInsertException("Failed to insert user");
+            if (result == 0) throw new UserSqlException("Failed to insert user");
 
         } catch (SQLException e) {
-            throw new UserInsertException("Error saving user to DB", e);
+            throw new UserSqlException("Error saving user to DB", e);
         }
     }
 
@@ -54,10 +54,10 @@ public class UserRepository {
             ps.setLong(6, user.getId());
 
             int result = ps.executeUpdate();
-            if (result == 0) throw new UserInsertException("Failed to update user");
+            if (result == 0) throw new UserSqlException("Failed to update user");
 
         } catch (SQLException e) {
-            throw new UserInsertException("Error updating user in DB", e);
+            throw new UserSqlException("Error updating user in DB", e);
         }
     }
 
@@ -70,11 +70,11 @@ public class UserRepository {
             int result = ps.executeUpdate();
 
             if (result == 0) {
-                throw new UserInsertException("No user found with id: " + userId);
+                throw new UserSqlException("No user found with id: " + userId);
             }
 
         } catch (SQLException e) {
-            throw new UserInsertException("Error deleting user with id: " + userId, e);
+            throw new UserSqlException("Error deleting user with id: " + userId, e);
         }
     }
 
@@ -98,13 +98,13 @@ public class UserRepository {
                         rs.getString("phone")
                 );
             } else {
-                throw new UserInsertException("No user found with id: " + userId);
+                throw new UserSqlException("No user found with id: " + userId);
             }
 
             return user;
 
         } catch (SQLException e) {
-            throw new UserInsertException("Error finding user with id: " + userId, e);
+            throw new UserSqlException("Error finding user with id: " + userId, e);
         }
     }
 
@@ -131,7 +131,7 @@ public class UserRepository {
             return users;
 
         } catch (SQLException e) {
-            throw new UserInsertException("Error retrieving all users", e);
+            throw new UserSqlException("Error retrieving all users", e);
         }
     }
 
