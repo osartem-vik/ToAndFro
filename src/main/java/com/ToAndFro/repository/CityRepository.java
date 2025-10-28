@@ -13,6 +13,7 @@ import java.sql.SQLException;
 public class CityRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(CityRepository.class);
     private final String SAVE_CITY_QUERY = "INSERT INTO city(name, regionId) VALUES (?, ?)";
+    private final String UPDATE_CITY_QUERY = "UPDATE city SET name = ?, regionId = ? WHERE id = ?";
 
     private final int noChangedRows = 0;
 
@@ -35,6 +36,24 @@ public class CityRepository {
         } catch (SQLException e) {
             LOGGER.error("Error saving city: {}", e.getMessage());
             throw new CitySqlException("Error saving city", e);
+        }
+    }
+
+    public void update(City city) {
+        try(Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CITY_QUERY);
+            setCityParams(city, preparedStatement);
+            preparedStatement.setLong(3, city.getId());
+
+            int res = preparedStatement.executeUpdate();
+            if (res == noChangedRows) {
+                LOGGER.error("Failed updating city");
+                throw new CitySqlException("Failed updating city");
+            }
+            LOGGER.info("City updated: {} rows affected", res);
+        } catch (SQLException e) {
+            LOGGER.error("Error updating city: {}", e.getMessage());
+            throw new CitySqlException("Error updating city", e);
         }
     }
 }
