@@ -26,7 +26,8 @@ public class RegionRepository {
     private final int noChangedRows = 0;
 
     private void setRegionParams(Region region, PreparedStatement statement) throws SQLException {
-        statement.setString(1, region.getName());
+        int nameIndex = 1;
+        statement.setString(nameIndex, region.getName());
     }
 
     public void save(Region region) {
@@ -50,7 +51,9 @@ public class RegionRepository {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_REGION_QUERY);
             setRegionParams(region, preparedStatement);
-            preparedStatement.setLong(2, region.getId());
+
+            int idIndex = 2;
+            preparedStatement.setLong(idIndex, region.getId());
 
             int res = preparedStatement.executeUpdate();
             if (res == noChangedRows) {
@@ -67,7 +70,9 @@ public class RegionRepository {
     public void delete(Long id) {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REGION_QUERY);
-            preparedStatement.setLong(1, id);
+
+            int idIndex = 1;
+            preparedStatement.setLong(idIndex, id);
 
             int res = preparedStatement.executeUpdate();
             if (res == noChangedRows) {
@@ -84,7 +89,9 @@ public class RegionRepository {
     public Region findById(Long id) {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_REGION_BY_ID_QUERY);
-            preparedStatement.setLong(1, id);
+
+            int idIndex = 1;
+            preparedStatement.setLong(idIndex, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

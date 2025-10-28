@@ -26,8 +26,11 @@ public class CityRepository {
     private final int noChangedRows = 0;
 
     private void setCityParams(City city, PreparedStatement statement) throws SQLException {
-        statement.setString(1, city.getName());
-        statement.setLong(2, city.getRegionId());
+        int nameIndex = 1;
+        int regionIdIndex = 2;
+
+        statement.setString(nameIndex, city.getName());
+        statement.setLong(regionIdIndex, city.getRegionId());
     }
 
     public void save(City city) {
@@ -51,7 +54,9 @@ public class CityRepository {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CITY_QUERY);
             setCityParams(city, preparedStatement);
-            preparedStatement.setLong(3, city.getId());
+
+            int idIndex = 3;
+            preparedStatement.setLong(idIndex, city.getId());
 
             int res = preparedStatement.executeUpdate();
             if (res == noChangedRows) {
@@ -68,7 +73,9 @@ public class CityRepository {
     public void delete(Long id) {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CITY_QUERY);
-            preparedStatement.setLong(1, id);
+
+            int idIndex = 1;
+            preparedStatement.setLong(idIndex, id);
 
             int res = preparedStatement.executeUpdate();
             if (res == noChangedRows) {
@@ -85,7 +92,9 @@ public class CityRepository {
     public City findById(Long id) {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_CITY_BY_ID_QUERY);
-            preparedStatement.setLong(1, id);
+
+            int idIndex = 1;
+            preparedStatement.setLong(idIndex, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
