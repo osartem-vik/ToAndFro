@@ -10,7 +10,7 @@ public class CityMapper {
         return new City(
                 resultSet.getLong("id"),
                 resultSet.getString("name"),
-                resultSet.getLong("regionId")
+                resultSet.getLong("region_id")
         );
     }
 }
