@@ -14,6 +14,7 @@ public class CityRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(CityRepository.class);
     private final String SAVE_CITY_QUERY = "INSERT INTO city(name, regionId) VALUES (?, ?)";
     private final String UPDATE_CITY_QUERY = "UPDATE city SET name = ?, regionId = ? WHERE id = ?";
+    private final String DELETE_CITY_QUERY = "DELETE FROM city WHERE id = ?";
 
     private final int noChangedRows = 0;
 
@@ -54,6 +55,23 @@ public class CityRepository {
         } catch (SQLException e) {
             LOGGER.error("Error updating city: {}", e.getMessage());
             throw new CitySqlException("Error updating city", e);
+        }
+    }
+
+    public void delete(Long id) {
+        try(Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CITY_QUERY);
+            preparedStatement.setLong(1, id);
+
+            int res = preparedStatement.executeUpdate();
+            if (res == noChangedRows) {
+                LOGGER.error("Failed deleting city");
+                throw new CitySqlException("Failed deleting city");
+            }
+            LOGGER.info("City deleted: {} rows affected", res);
+        } catch (SQLException e) {
+            LOGGER.error("Error deleting city: {}", e.getMessage());
+            throw new CitySqlException("Error deleting city", e);
         }
     }
 }
