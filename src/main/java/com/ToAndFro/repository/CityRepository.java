@@ -16,7 +16,7 @@ public class CityRepository {
 
     private final int noChangedRows = 0;
 
-    public void setCityParams(City city, PreparedStatement statement) throws SQLException {
+    private void setCityParams(City city, PreparedStatement statement) throws SQLException {
         statement.setString(1, city.getName());
         statement.setLong(2, city.getRegionId());
     }

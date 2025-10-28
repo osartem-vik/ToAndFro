@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegionRepository {
-    Logger LOGGER = LoggerFactory.getLogger(RegionRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegionRepository.class);
     private final String SAVE_REGION_QUERY = "INSERT INTO region (name) VALUES (?)";
     private final String UPDATE_REGION_QUERY = "UPDATE region SET name = ? WHERE id = ?";
     private final String DELETE_REGION_QUERY = "DELETE FROM region WHERE id = ?";
@@ -25,7 +25,7 @@ public class RegionRepository {
     private RegionMapper regionMapper = new RegionMapper();
     private final int noChangedRows = 0;
 
-    public void setRegionParams(Region region, PreparedStatement statement) throws SQLException {
+    private void setRegionParams(Region region, PreparedStatement statement) throws SQLException {
         statement.setString(1, region.getName());
     }
 
