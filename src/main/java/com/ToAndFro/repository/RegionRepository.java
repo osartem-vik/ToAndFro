@@ -93,17 +93,16 @@ public class RegionRepository {
             int idIndex = 1;
             preparedStatement.setLong(idIndex, id);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            Region region;
-            if (resultSet.next()) {
-                region = regionMapper.mapToRegion(resultSet);
-            } else {
-                LOGGER.error("No region found with id {}", id);
-                throw new RegionSqlException("No region found with id" + id);
+                if (resultSet.next()) {
+                    LOGGER.info("Region found");
+                    return regionMapper.mapToRegion(resultSet);
+                } else {
+                    LOGGER.error("No region found with id {}", id);
+                    throw new RegionSqlException("No region found with id: " + id);
+                }
             }
-            LOGGER.info("Region found");
-            return region;
         } catch (SQLException e) {
             LOGGER.error("Error finding region with id {}: {}", id, e.getMessage());
             throw new RegionSqlException("Error finding region with id " + id, e);
@@ -112,9 +111,8 @@ public class RegionRepository {
 
     public List<Region> findAll() {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_REGION_QUERY)) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_REGION_QUERY);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             List<Region> regions = new ArrayList<>();
             while (resultSet.next()) {

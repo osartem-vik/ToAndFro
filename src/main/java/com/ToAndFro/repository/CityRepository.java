@@ -96,17 +96,16 @@ public class CityRepository {
             int idIndex = 1;
             preparedStatement.setLong(idIndex, id);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            City city;
-            if (resultSet.next()) {
-                city = cityMapper.mapToCity(resultSet);
-            } else {
-                LOGGER.error("No city found with id: {}", id);
-                throw new CitySqlException("No region found with id: " + id);
+                if (resultSet.next()) {
+                    LOGGER.info("City found");
+                    return cityMapper.mapToCity(resultSet);
+                } else {
+                    LOGGER.error("No city found with id: {}", id);
+                    throw new CitySqlException("No city found with id: " + id);
+                }
             }
-            LOGGER.info("City found");
-            return city;
         } catch (SQLException e) {
             LOGGER.error("Error finding city with id {}: {}", id, e.getMessage());
             throw new CitySqlException("Error finding city with id: " + id, e);
@@ -115,9 +114,8 @@ public class CityRepository {
 
     public List<City> findAll() {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_CITY_QUERY)) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_CITY_QUERY);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             List<City> cities = new ArrayList<>();
             while (resultSet.next()) {
