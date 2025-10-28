@@ -2,12 +2,14 @@ package com.ToAndFro.repository;
 
 import com.ToAndFro.configs.JDBCConnectionFactory;
 import com.ToAndFro.exceptions.RegionSqlException;
+import com.ToAndFro.mapper.RegionMapper;
 import com.ToAndFro.models.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RegionRepository {
@@ -15,7 +17,10 @@ public class RegionRepository {
     private final String SAVE_REGION_QUERY = "INSERT INTO region (name) VALUES (?)";
     private final String UPDATE_REGION_QUERY = "UPDATE region SET name = ? WHERE id = ?";
     private final String DELETE_REGION_QUERY = "DELETE FROM region WHERE id = ?";
+    private final String FIND_REGION_QUERY = "SELECT * FROM region WHERE id = ?";
 
+
+    private RegionMapper regionMapper = new RegionMapper();
     private final int noChangedRows = 0;
 
     public void setRegionParams(Region region, PreparedStatement statement) throws SQLException {
@@ -71,6 +76,28 @@ public class RegionRepository {
         } catch (SQLException e) {
             LOGGER.error("Error deleting region: {}", e.getMessage());
             throw new RegionSqlException("Error deleting region", e);
+        }
+    }
+
+    public Region findById(Long id) {
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_REGION_QUERY);
+            preparedStatement.setLong(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Region region;
+            if (resultSet.next()) {
+                region = regionMapper.createRegion(resultSet);
+            } else {
+                LOGGER.error("No region found with id {}", id);
+                throw new RegionSqlException("No region found with id" + id);
+            }
+            LOGGER.info("Region found");
+            return region;
+        } catch (SQLException e) {
+            LOGGER.error("Error finding region with id {}: {}", id, e.getMessage());
+            throw new RegionSqlException("Error finding region with id " + id, e);
         }
     }
 }
