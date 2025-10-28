@@ -97,7 +97,7 @@ public class RegionRepository {
 
             Region region;
             if (resultSet.next()) {
-                region = regionMapper.createRegion(resultSet);
+                region = regionMapper.mapToRegion(resultSet);
             } else {
                 LOGGER.error("No region found with id {}", id);
                 throw new RegionSqlException("No region found with id" + id);
@@ -118,7 +118,7 @@ public class RegionRepository {
 
             List<Region> regions = new ArrayList<>();
             while (resultSet.next()) {
-                regions.add(regionMapper.createRegion(resultSet));
+                regions.add(regionMapper.mapToRegion(resultSet));
             }
             LOGGER.info("Got {} regions from DB", regions.size());
             return regions;

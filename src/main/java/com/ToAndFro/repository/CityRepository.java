@@ -100,7 +100,7 @@ public class CityRepository {
 
             City city;
             if (resultSet.next()) {
-                city = cityMapper.createCity(resultSet);
+                city = cityMapper.mapToCity(resultSet);
             } else {
                 LOGGER.error("No city found with id: {}", id);
                 throw new CitySqlException("No region found with id: " + id);
@@ -121,7 +121,7 @@ public class CityRepository {
 
             List<City> cities = new ArrayList<>();
             while (resultSet.next()) {
-                cities.add(cityMapper.createCity(resultSet));
+                cities.add(cityMapper.mapToCity(resultSet));
             }
             LOGGER.info("Got {} cities from DB", cities.size());
             return cities;

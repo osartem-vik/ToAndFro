@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RegionMapper {
-    public Region createRegion(ResultSet resultSet) throws SQLException {
+    public Region mapToRegion(ResultSet resultSet) throws SQLException {
         return new Region(
                 resultSet.getLong("id"),
                 resultSet.getString("name")

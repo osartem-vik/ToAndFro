@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CityMapper {
-    public City createCity(ResultSet resultSet) throws SQLException {
+    public City mapToCity(ResultSet resultSet) throws SQLException {
         return new City(
                 resultSet.getLong("id"),
                 resultSet.getString("name"),
