@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CityRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(CityRepository.class);
@@ -18,6 +20,7 @@ public class CityRepository {
     private final String UPDATE_CITY_QUERY = "UPDATE city SET name = ?, regionId = ? WHERE id = ?";
     private final String DELETE_CITY_QUERY = "DELETE FROM city WHERE id = ?";
     private final String FIND_CITY_BY_ID_QUERY = "SELECT * FROM city WHERE id = ?";
+    private final String FIND_ALL_CITY_QUERY = "SELECT * FROM city";
 
     private CityMapper cityMapper = new CityMapper();
     private final int noChangedRows = 0;
@@ -98,6 +101,24 @@ public class CityRepository {
         } catch (SQLException e) {
             LOGGER.error("Error finding city with id {}: {}", id, e.getMessage());
             throw new CitySqlException("Error finding city with id: " + id, e);
+        }
+    }
+
+    public List<City> findAll() {
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_CITY_QUERY);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<City> cities = new ArrayList<>();
+            while (resultSet.next()) {
+                cities.add(cityMapper.createCity(resultSet));
+            }
+            LOGGER.info("Got {} cities from DB", cities.size());
+            return cities;
+        } catch (SQLException e) {
+            LOGGER.error("Error getting all cities: {}", e.getMessage());
+            throw new CitySqlException("Error getting all cities", e);
         }
     }
 }
