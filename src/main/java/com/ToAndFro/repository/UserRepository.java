@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository {
@@ -63,8 +64,8 @@ public class UserRepository {
             PreparedStatement ps = connection.prepareStatement(USER_UPDATE_QUERY);
             setUserParams(ps, user);
 
-            int id_number = 6;
-            ps.setLong(id_number, user.getId());
+            int idColumnPosition = 6;
+            ps.setLong(idColumnPosition, user.getId());
 
             int result = ps.executeUpdate();
             if (result == 0){
@@ -85,8 +86,8 @@ public class UserRepository {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(USER_DELETE_QUERY)) {
 
-            int id_index = 1;
-            ps.setLong(id_index, userId);
+            int idColumnPosition = 1;
+            ps.setLong(idColumnPosition, userId);
 
             int result = ps.executeUpdate();
 
@@ -108,8 +109,8 @@ public class UserRepository {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(USER_FIND_BY_ID_QUERY)) {
 
-            int id_index = 1;
-            ps.setLong(id_index, userId);
+            int idColumnPosition = 1;
+            ps.setLong(idColumnPosition, userId);
 
             ResultSet rs = ps.executeQuery();
 
@@ -134,7 +135,7 @@ public class UserRepository {
 
             ResultSet rs = ps.executeQuery();
 
-            List<User> users = new java.util.ArrayList<>();
+            List<User> users = new ArrayList<>();
 
             while(rs.next()){
                 User user = userMapper.mapToUser(rs);
