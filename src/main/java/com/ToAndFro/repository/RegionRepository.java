@@ -11,14 +11,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegionRepository {
     Logger LOGGER = LoggerFactory.getLogger(RegionRepository.class);
     private final String SAVE_REGION_QUERY = "INSERT INTO region (name) VALUES (?)";
     private final String UPDATE_REGION_QUERY = "UPDATE region SET name = ? WHERE id = ?";
     private final String DELETE_REGION_QUERY = "DELETE FROM region WHERE id = ?";
-    private final String FIND_REGION_QUERY = "SELECT * FROM region WHERE id = ?";
-
+    private final String FIND_REGION_BY_ID_QUERY = "SELECT * FROM region WHERE id = ?";
+    private final String FIND_ALL_REGION_QUERY = "SELECT * FROM region";
 
     private RegionMapper regionMapper = new RegionMapper();
     private final int noChangedRows = 0;
@@ -81,7 +83,7 @@ public class RegionRepository {
 
     public Region findById(Long id) {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_REGION_QUERY);
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_REGION_BY_ID_QUERY);
             preparedStatement.setLong(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -98,6 +100,24 @@ public class RegionRepository {
         } catch (SQLException e) {
             LOGGER.error("Error finding region with id {}: {}", id, e.getMessage());
             throw new RegionSqlException("Error finding region with id " + id, e);
+        }
+    }
+
+    public List<Region> findAll() {
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_REGION_QUERY);
+            preparedStatement.execute();
+
+            ResultSet resultSet = preparedStatement.getResultSet();
+            List<Region> regions = new ArrayList<>();
+            while (resultSet.next()) {
+                regions.add(regionMapper.createRegion(resultSet));
+            }
+            LOGGER.info("Got {} regions from DB", regions.size());
+            return regions;
+        } catch (SQLException e) {
+            LOGGER.error("Error getting all regions: {}", e.getMessage());
+            throw new RegionSqlException("Error getting all regions", e);
         }
     }
 }
