@@ -37,11 +37,10 @@ public class UserRepository {
         ps.setString(4, user.getPassword());
         ps.setString(5, user.getPhone());
     }
-
     public void save(User user) {
         LOGGER.info("Method save called for user with email: {}", user.getEmail());
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(USER_INSERT_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+            PreparedStatement ps = connection.prepareStatement(USER_INSERT_QUERY)) {
             setUserParams(ps, user);
 
             int result = ps.executeUpdate();
@@ -60,8 +59,8 @@ public class UserRepository {
 
     public void update(User user) {
         LOGGER.info("Method update called for user with id: {}", user.getId());
-        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(USER_UPDATE_QUERY);
+        try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
+            PreparedStatement ps = connection.prepareStatement(USER_UPDATE_QUERY)) {
             setUserParams(ps, user);
 
             int idColumnPosition = 6;
