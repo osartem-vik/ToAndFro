@@ -18,6 +18,7 @@ public class FavoriteRepository {
     private static final String REMOVE_FAVORITE_SQL = "DELETE FROM favorite WHERE user_id = ? AND listing_id = ?";
     private static final String IS_FAVORITE_SQL = "SELECT COUNT(*) FROM favorite WHERE user_id = ? AND listing_id = ?";
     private static final String GET_FAVORITES_FOR_USER_SQL = "SELECT listing_id FROM favorite WHERE user_id = ?";
+    private static final String GET_USERS_FOR_LISTING_SQL = "SELECT user_id FROM favorite WHERE listing_id = ?";
     private final JDBCConnectionFactory connectionFactory;
 
     public FavoriteRepository() {
@@ -87,6 +88,23 @@ public class FavoriteRepository {
             throw new RuntimeException("Failed to retrieve user favorites", e);
         }
         return listingIds;
+    }
+    public List<Long> getUsersWhoFavoritedListing(long listingId) {
+        List<Long> userIds = new ArrayList<>();
+        try (Connection conn = connectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(GET_USERS_FOR_LISTING_SQL)) {
+            stmt.setLong(1, listingId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    userIds.add(rs.getLong("user_id"));
+                }
+                LOGGER.debug("Retrieved {} users who favorited listing {}", userIds.size(), listingId);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error retrieving users for favorited listing {}", listingId, e);
+            throw new RuntimeException("Failed to retrieve favorited users", e);
+        }
+        return userIds;
     }
 }
 
