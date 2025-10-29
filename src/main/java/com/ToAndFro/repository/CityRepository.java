@@ -16,13 +16,13 @@ import java.util.List;
 
 public class CityRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(CityRepository.class);
-    private final String SAVE_CITY_QUERY = "INSERT INTO city(name, region_id) VALUES (?, ?)";
-    private final String UPDATE_CITY_QUERY = "UPDATE city SET name = ?, region_id = ? WHERE id = ?";
-    private final String DELETE_CITY_QUERY = "DELETE FROM city WHERE id = ?";
-    private final String FIND_CITY_BY_ID_QUERY = "SELECT * FROM city WHERE id = ?";
-    private final String FIND_ALL_CITY_QUERY = "SELECT * FROM city";
+    private static final String SAVE_CITY_QUERY = "INSERT INTO city(name, region_id) VALUES (?, ?)";
+    private static final String UPDATE_CITY_QUERY = "UPDATE city SET name = ?, region_id = ? WHERE id = ?";
+    private static final String DELETE_CITY_QUERY = "DELETE FROM city WHERE id = ?";
+    private static final String FIND_CITY_BY_ID_QUERY = "SELECT * FROM city WHERE id = ?";
+    private static final String FIND_ALL_CITY_QUERY = "SELECT * FROM city";
 
-    private CityMapper cityMapper = new CityMapper();
+    private final CityMapper cityMapper = new CityMapper();
     private final int noChangedRows = 0;
 
     private void setCityParams(City city, PreparedStatement statement) throws SQLException {

@@ -16,13 +16,13 @@ import java.util.List;
 
 public class RegionRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegionRepository.class);
-    private final String SAVE_REGION_QUERY = "INSERT INTO region (name) VALUES (?)";
-    private final String UPDATE_REGION_QUERY = "UPDATE region SET name = ? WHERE id = ?";
-    private final String DELETE_REGION_QUERY = "DELETE FROM region WHERE id = ?";
-    private final String FIND_REGION_BY_ID_QUERY = "SELECT * FROM region WHERE id = ?";
-    private final String FIND_ALL_REGION_QUERY = "SELECT * FROM region";
+    private static final String SAVE_REGION_QUERY = "INSERT INTO region (name) VALUES (?)";
+    private static final String UPDATE_REGION_QUERY = "UPDATE region SET name = ? WHERE id = ?";
+    private static final String DELETE_REGION_QUERY = "DELETE FROM region WHERE id = ?";
+    private static final String FIND_REGION_BY_ID_QUERY = "SELECT * FROM region WHERE id = ?";
+    private static final String FIND_ALL_REGION_QUERY = "SELECT * FROM region";
 
-    private RegionMapper regionMapper = new RegionMapper();
+    private final RegionMapper regionMapper = new RegionMapper();
     private final int noChangedRows = 0;
 
     private void setRegionParams(Region region, PreparedStatement statement) throws SQLException {
