@@ -124,5 +124,11 @@ public class FavoriteRepository {
         }
         return 0;
     }
+    public Favorite getFavorite(long userId, long listingId) {
+        if (!isFavorite(userId, listingId)) {
+            return null;
+        }
+        return new Favorite(userId, listingId);
+    }
 }
 
