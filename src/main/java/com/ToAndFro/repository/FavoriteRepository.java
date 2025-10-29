@@ -9,12 +9,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FavoriteRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(FavoriteRepository.class);
     private static final String ADD_FAVORITE_SQL = "INSERT IGNORE INTO favorite (user_id, listing_id) VALUES (?, ?)";
     private static final String REMOVE_FAVORITE_SQL = "DELETE FROM favorite WHERE user_id = ? AND listing_id = ?";
     private static final String IS_FAVORITE_SQL = "SELECT COUNT(*) FROM favorite WHERE user_id = ? AND listing_id = ?";
+    private static final String GET_FAVORITES_FOR_USER_SQL = "SELECT listing_id FROM favorite WHERE user_id = ?";
     private final JDBCConnectionFactory connectionFactory;
 
     public FavoriteRepository() {
@@ -67,6 +70,23 @@ public class FavoriteRepository {
             throw new RuntimeException("Failed to check favorite", e);
         }
         return false;
+    }
+    public List<Long> getFavoriteListingsForUser(long userId) {
+        List<Long> listingIds = new ArrayList<>();
+        try (Connection conn = connectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(GET_FAVORITES_FOR_USER_SQL)) {
+            stmt.setLong(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    listingIds.add(rs.getLong("listing_id"));
+                }
+                LOGGER.debug("Retrieved {} favorite listings for user {}", listingIds.size(), userId);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error retrieving favorites for user {}", userId, e);
+            throw new RuntimeException("Failed to retrieve user favorites", e);
+        }
+        return listingIds;
     }
 }
 
