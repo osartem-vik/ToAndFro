@@ -19,6 +19,7 @@ public class FavoriteRepository {
     private static final String IS_FAVORITE_SQL = "SELECT COUNT(*) FROM favorite WHERE user_id = ? AND listing_id = ?";
     private static final String GET_FAVORITES_FOR_USER_SQL = "SELECT listing_id FROM favorite WHERE user_id = ?";
     private static final String GET_USERS_FOR_LISTING_SQL = "SELECT user_id FROM favorite WHERE listing_id = ?";
+    private static final String COUNT_FAVORITES_FOR_LISTING_SQL = "SELECT COUNT(*) FROM favorite WHERE listing_id = ?";
     private final JDBCConnectionFactory connectionFactory;
 
     public FavoriteRepository() {
@@ -105,6 +106,23 @@ public class FavoriteRepository {
             throw new RuntimeException("Failed to retrieve favorited users", e);
         }
         return userIds;
+    }
+    public int countFavoritesForListing(long listingId) {
+        try (Connection conn = connectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(COUNT_FAVORITES_FOR_LISTING_SQL)) {
+            stmt.setLong(1, listingId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    LOGGER.debug("Favorite count for listing {}: {}", listingId, count);
+                    return count;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error counting favorites for listing {}", listingId, e);
+            throw new RuntimeException("Failed to count favorites", e);
+        }
+        return 0;
     }
 }
 
