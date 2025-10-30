@@ -3,7 +3,7 @@ package com.ToAndFro.repository;
 import com.ToAndFro.configs.JDBCConnectionFactory;
 import com.ToAndFro.exceptions.FavoriteAlreadyExistsException;
 import com.ToAndFro.exceptions.FavoriteNotFoundException;
-import com.ToAndFro.exceptions.FavoriteRepositoryException;
+import com.ToAndFro.exceptions.FavoriteFailedAddException;
 import com.ToAndFro.mapper.FavoriteMapper;
 import com.ToAndFro.models.Favorite;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class FavoriteRepository {
         this.connectionFactory = JDBCConnectionFactory.getInstance();
     }
 
-    public Favorite addFavorite(long userId, long listingId) {
+    public Favorite saveFavorite(long userId, long listingId) {
         if (isFavorite(userId, listingId)) {
             throw new FavoriteAlreadyExistsException("Favorite already exists for user " + userId + " and listing " + listingId);
         }
@@ -36,13 +36,13 @@ public class FavoriteRepository {
             FavoriteMapper.toPreparedStatement(stmt, new Favorite(userId, listingId), 1);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                throw new FavoriteRepositoryException("Failed to add favorite for user " + userId + " and listing " + listingId);
+                throw new FavoriteFailedAddException("Failed to add favorite for user " + userId + " and listing " + listingId);
             }
             LOGGER.debug("Added favorite for user {} and listing {}", userId, listingId);
             return new Favorite(userId, listingId);
         } catch (SQLException e) {
             LOGGER.error("Error adding favorite for user {} and listing {}", userId, listingId, e);
-            throw new FavoriteRepositoryException("Failed to add favorite", e);
+            throw new FavoriteFailedAddException("Failed to add favorite", e);
         }
     }
 
@@ -58,7 +58,7 @@ public class FavoriteRepository {
             return rowsAffected > 0;
         } catch (SQLException e) {
             LOGGER.error("Error removing favorite for user {} and listing {}", userId, listingId, e);
-            throw new FavoriteRepositoryException("Failed to remove favorite", e);
+            throw new FavoriteFailedAddException("Failed to remove favorite", e);
         }
     }
 
@@ -73,7 +73,7 @@ public class FavoriteRepository {
             }
         } catch (SQLException e) {
             LOGGER.error("Error checking favorite for user {} and listing {}", userId, listingId, e);
-            throw new FavoriteRepositoryException("Failed to check favorite", e);
+            throw new FavoriteFailedAddException("Failed to check favorite", e);
         }
     }
 
@@ -84,13 +84,13 @@ public class FavoriteRepository {
             stmt.setLong(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    favorites.add(FavoriteMapper.toFavorite(rs));
+                    favorites.add(FavoriteMapper.mapToFavorite(rs));
                 }
                 LOGGER.debug("Retrieved {} favorite entries for user {}", favorites.size(), userId);
             }
         } catch (SQLException e) {
             LOGGER.error("Error retrieving favorites for user {}", userId, e);
-            throw new FavoriteRepositoryException("Failed to retrieve user favorites", e);
+            throw new FavoriteFailedAddException("Failed to retrieve user favorites", e);
         }
         return favorites;
     }
@@ -108,7 +108,7 @@ public class FavoriteRepository {
             }
         } catch (SQLException e) {
             LOGGER.error("Error retrieving users for favorited listing {}", listingId, e);
-            throw new FavoriteRepositoryException("Failed to retrieve favorited users", e);
+            throw new FavoriteFailedAddException("Failed to retrieve favorited users", e);
         }
         return userIds;
     }
@@ -126,7 +126,7 @@ public class FavoriteRepository {
             }
         } catch (SQLException e) {
             LOGGER.error("Error counting favorites for listing {}", listingId, e);
-            throw new FavoriteRepositoryException("Failed to count favorites", e);
+            throw new FavoriteFailedAddException("Failed to count favorites", e);
         }
         return 0;
     }
@@ -137,7 +137,7 @@ public class FavoriteRepository {
             FavoriteMapper.toPreparedStatement(stmt, new Favorite(userId, listingId), 1);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Favorite favorite = FavoriteMapper.toFavorite(rs);
+                    Favorite favorite = FavoriteMapper.mapToFavorite(rs);
                     LOGGER.debug("Retrieved favorite: {}", favorite);
                     return favorite;
                 } else {
@@ -146,7 +146,7 @@ public class FavoriteRepository {
             }
         } catch (SQLException e) {
             LOGGER.error("Error retrieving favorite for user {} and listing {}", userId, listingId, e);
-            throw new FavoriteRepositoryException("Failed to retrieve favorite", e);
+            throw new FavoriteFailedAddException("Failed to retrieve favorite", e);
         }
     }
 }
