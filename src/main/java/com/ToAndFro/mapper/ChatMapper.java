@@ -11,7 +11,6 @@ public class ChatMapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatMapper.class);
 
     public static Chat map(ResultSet rs) throws SQLException {
-        try {
             Chat chat = new Chat(
                     rs.getLong("id"),
                     rs.getLong("listing_id"),
@@ -19,9 +18,5 @@ public class ChatMapper {
             );
             LOGGER.info("Map chat with id {}", chat.getId());
             return chat;
-        } catch (SQLException | IllegalArgumentException e){
-            LOGGER.error("Error while mapping chat object", e);
-            throw new RuntimeException(e);
-        }
     }
 }
