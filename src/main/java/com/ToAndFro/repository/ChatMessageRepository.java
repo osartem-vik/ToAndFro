@@ -1,7 +1,7 @@
 package com.ToAndFro.repository;
 
 import com.ToAndFro.configs.JDBCConnectionFactory;
-import com.ToAndFro.exceptions.ChatMessageSqlException;
+import com.ToAndFro.exceptions.ChatMessagePersistenceFailed;
 import com.ToAndFro.mapper.ChatMessageMapper;
 import com.ToAndFro.models.ChatMessage;
 import org.slf4j.Logger;
@@ -42,12 +42,12 @@ public class ChatMessageRepository {
             int affectedRows = ps.executeUpdate();
             if (affectedRows == NO_ROWS_AFFECTED) {
                 LOGGER.error("Could not save message with id {}, no rows affected", chatMessage.getId());
-                throw new ChatMessageSqlException("Failed to save chat message");
+                throw new ChatMessagePersistenceFailed("Failed to save chat message");
             }
             LOGGER.info("Message saved with id {}", chatMessage.getId());
         } catch (SQLException e){
             LOGGER.error("Error saving chat message with id {}", chatMessage.getId(), e);
-            throw new ChatMessageSqlException("Error saving chat message", e);
+            throw new ChatMessagePersistenceFailed("Error saving chat message", e);
         }
     }
 
@@ -59,14 +59,14 @@ public class ChatMessageRepository {
 
             int affectedRows = ps.executeUpdate();
             if (affectedRows == NO_ROWS_AFFECTED) {
-                throw new ChatMessageSqlException("Chat message not found for update with id " + chatMessage.getId());
+                throw new ChatMessagePersistenceFailed("Chat message not found for update with id " + chatMessage.getId());
             }
 
             LOGGER.info("Chat message updated with id {}", chatMessage.getId());
 
         } catch (SQLException e) {
             LOGGER.error("Error updating chat message", e);
-            throw new ChatMessageSqlException("Error updating chat message", e);
+            throw new ChatMessagePersistenceFailed("Error updating chat message", e);
         }
     }
 
@@ -86,7 +86,7 @@ public class ChatMessageRepository {
 
         } catch (SQLException e) {
             LOGGER.error("Error deleting chat message with id {}", id, e);
-            throw new ChatMessageSqlException("Error deleting chat message", e);
+            throw new ChatMessagePersistenceFailed("Error deleting chat message", e);
         }
     }
 
@@ -103,14 +103,14 @@ public class ChatMessageRepository {
                     return ChatMessageMapper.map(rs);
                 } else {
                     LOGGER.trace("No chat message with id {}", id);
-                    throw new ChatMessageSqlException("No chat message with id " + id);
+                    throw new ChatMessagePersistenceFailed("No chat message with id " + id);
                 }
 
             }
 
         } catch (SQLException e) {
             LOGGER.error("Error finding chat message with id {}", id, e);
-            throw new ChatMessageSqlException("Error finding chat message", e);
+            throw new ChatMessagePersistenceFailed("Error finding chat message", e);
         }
     }
 
@@ -132,7 +132,7 @@ public class ChatMessageRepository {
 
         } catch (SQLException e) {
             LOGGER.error("Error finding all chat message", e);
-            throw new ChatMessageSqlException("Error finding all chat messages", e);
+            throw new ChatMessagePersistenceFailed("Error finding all chat messages", e);
         }
     }
 
