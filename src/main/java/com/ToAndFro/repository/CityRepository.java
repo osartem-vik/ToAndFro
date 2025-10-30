@@ -26,11 +26,11 @@ public class CityRepository {
     private final int noChangedRows = 0;
 
     private void setCityParams(City city, PreparedStatement statement) throws SQLException {
-        int nameIndex = 1;
-        int regionIdIndex = 2;
+        int nameColumn = 1;
+        int regionIdColumn = 2;
 
-        statement.setString(nameIndex, city.getName());
-        statement.setLong(regionIdIndex, city.getRegionId());
+        statement.setString(nameColumn, city.getName());
+        statement.setLong(regionIdColumn, city.getRegionId());
     }
 
     public void save(City city) {
@@ -55,8 +55,8 @@ public class CityRepository {
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CITY_QUERY)) {
             setCityParams(city, preparedStatement);
 
-            int idIndex = 3;
-            preparedStatement.setLong(idIndex, city.getId());
+            int idColumn = 3;
+            preparedStatement.setLong(idColumn, city.getId());
 
             int result = preparedStatement.executeUpdate();
             if (result == noChangedRows) {
@@ -74,8 +74,8 @@ public class CityRepository {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CITY_QUERY)) {
 
-            int idIndex = 1;
-            preparedStatement.setLong(idIndex, id);
+            int idColumn = 1;
+            preparedStatement.setLong(idColumn, id);
 
             int result = preparedStatement.executeUpdate();
             if (result == noChangedRows) {
@@ -93,8 +93,8 @@ public class CityRepository {
         try (Connection connection = JDBCConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_CITY_BY_ID_QUERY)) {
 
-            int idIndex = 1;
-            preparedStatement.setLong(idIndex, id);
+            int idColumn = 1;
+            preparedStatement.setLong(idColumn, id);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
