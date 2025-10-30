@@ -38,12 +38,12 @@ public class CityRepository {
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_CITY_QUERY)) {
             setCityParams(city, preparedStatement);
 
-            int res = preparedStatement.executeUpdate();
-            if (res == noChangedRows) {
+            int result = preparedStatement.executeUpdate();
+            if (result == noChangedRows) {
                 LOGGER.error("Failed saving city");
                 throw new CitySqlException("Failed saving city");
             }
-            LOGGER.info("City saved: {} rows affected", res);
+            LOGGER.info("City saved: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error saving city: {}", e.getMessage());
             throw new CitySqlException("Error saving city", e);
@@ -58,12 +58,12 @@ public class CityRepository {
             int idIndex = 3;
             preparedStatement.setLong(idIndex, city.getId());
 
-            int res = preparedStatement.executeUpdate();
-            if (res == noChangedRows) {
+            int result = preparedStatement.executeUpdate();
+            if (result == noChangedRows) {
                 LOGGER.error("Failed updating city");
                 throw new CitySqlException("Failed updating city");
             }
-            LOGGER.info("City updated: {} rows affected", res);
+            LOGGER.info("City updated: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error updating city: {}", e.getMessage());
             throw new CitySqlException("Error updating city", e);
@@ -77,12 +77,12 @@ public class CityRepository {
             int idIndex = 1;
             preparedStatement.setLong(idIndex, id);
 
-            int res = preparedStatement.executeUpdate();
-            if (res == noChangedRows) {
+            int result = preparedStatement.executeUpdate();
+            if (result == noChangedRows) {
                 LOGGER.error("Failed deleting city");
                 throw new CitySqlException("Failed deleting city");
             }
-            LOGGER.info("City deleted: {} rows affected", res);
+            LOGGER.info("City deleted: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error deleting city: {}", e.getMessage());
             throw new CitySqlException("Error deleting city", e);

@@ -35,12 +35,11 @@ public class RegionRepository {
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_REGION_QUERY)) {
             setRegionParams(region, preparedStatement);
 
-            int res = preparedStatement.executeUpdate();
-            if (res == noChangedRows) {
+            int result = preparedStatement.executeUpdate();
+            if (result == noChangedRows) {
                 LOGGER.error("Failed saving region");
-                throw new RegionSqlException("Failed saving region");
             }
-            LOGGER.info("Region saved: {} rows affected", res);
+            LOGGER.info("Region saved: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error saving region: {}", e.getMessage());
             throw new RegionSqlException("Error saving region", e);
@@ -55,12 +54,12 @@ public class RegionRepository {
             int idIndex = 2;
             preparedStatement.setLong(idIndex, region.getId());
 
-            int res = preparedStatement.executeUpdate();
-            if (res == noChangedRows) {
+            int result = preparedStatement.executeUpdate();
+            if (result == noChangedRows) {
                 LOGGER.error("Failed updating region");
                 throw new RegionSqlException("Failed updating region");
             }
-            LOGGER.info("Region updated: {} rows affected", res);
+            LOGGER.info("Region updated: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error updating region: {}", e.getMessage());
             throw new RegionSqlException("Error updating region", e);
@@ -74,12 +73,12 @@ public class RegionRepository {
             int idIndex = 1;
             preparedStatement.setLong(idIndex, id);
 
-            int res = preparedStatement.executeUpdate();
-            if (res == noChangedRows) {
+            int result = preparedStatement.executeUpdate();
+            if (result == noChangedRows) {
                 LOGGER.error("Failed deleting region");
                 throw new RegionSqlException("Failed deleting region");
             }
-            LOGGER.info("Region deleted: {} rows affected", res);
+            LOGGER.info("Region deleted: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error deleting region: {}", e.getMessage());
             throw new RegionSqlException("Error deleting region", e);
