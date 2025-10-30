@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class FavoriteMapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(FavoriteMapper.class);
 
-    public static Favorite toFavorite(ResultSet rs) throws SQLException {
+    public static Favorite mapToFavorite(ResultSet rs) throws SQLException {
         long userId = rs.getLong("user_id");
         long listingId = rs.getLong("listing_id");
         Favorite favorite = new Favorite(userId, listingId);
