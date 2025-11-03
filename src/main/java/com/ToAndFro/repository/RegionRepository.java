@@ -1,7 +1,7 @@
 package com.ToAndFro.repository;
 
 import com.ToAndFro.configs.JDBCConnectionFactory;
-import com.ToAndFro.exceptions.RegionRepositoryOperationException;
+import com.ToAndFro.exceptions.RegionOperationException;
 import com.ToAndFro.mapper.RegionMapper;
 import com.ToAndFro.models.Region;
 import org.slf4j.Logger;
@@ -42,7 +42,7 @@ public class RegionRepository {
             LOGGER.info("Region saved: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error saving region: {}", e.getMessage());
-            throw new RegionRepositoryOperationException("Error saving region", e);
+            throw new RegionOperationException("Error saving region", e);
         }
     }
 
@@ -57,12 +57,12 @@ public class RegionRepository {
             int result = preparedStatement.executeUpdate();
             if (result == noChangedRows) {
                 LOGGER.error("Failed updating region");
-                throw new RegionRepositoryOperationException("Failed updating region");
+                throw new RegionOperationException("Failed updating region");
             }
             LOGGER.info("Region updated: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error updating region: {}", e.getMessage());
-            throw new RegionRepositoryOperationException("Error updating region", e);
+            throw new RegionOperationException("Error updating region", e);
         }
     }
 
@@ -76,12 +76,12 @@ public class RegionRepository {
             int result = preparedStatement.executeUpdate();
             if (result == noChangedRows) {
                 LOGGER.error("Failed deleting region");
-                throw new RegionRepositoryOperationException("Failed deleting region");
+                throw new RegionOperationException("Failed deleting region");
             }
             LOGGER.info("Region deleted: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error deleting region: {}", e.getMessage());
-            throw new RegionRepositoryOperationException("Error deleting region", e);
+            throw new RegionOperationException("Error deleting region", e);
         }
     }
 
@@ -99,12 +99,12 @@ public class RegionRepository {
                     return regionMapper.mapToRegion(resultSet);
                 } else {
                     LOGGER.error("No region found with id {}", id);
-                    throw new RegionRepositoryOperationException("No region found with id: " + id);
+                    throw new RegionOperationException("No region found with id: " + id);
                 }
             }
         } catch (SQLException e) {
             LOGGER.error("Error finding region with id {}: {}", id, e.getMessage());
-            throw new RegionRepositoryOperationException("Error finding region with id " + id, e);
+            throw new RegionOperationException("Error finding region with id " + id, e);
         }
     }
 
@@ -121,7 +121,7 @@ public class RegionRepository {
             return regions;
         } catch (SQLException e) {
             LOGGER.error("Error getting all regions: {}", e.getMessage());
-            throw new RegionRepositoryOperationException("Error getting all regions", e);
+            throw new RegionOperationException("Error getting all regions", e);
         }
     }
 }

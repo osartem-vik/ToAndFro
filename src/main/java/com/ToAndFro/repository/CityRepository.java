@@ -1,7 +1,7 @@
 package com.ToAndFro.repository;
 
 import com.ToAndFro.configs.JDBCConnectionFactory;
-import com.ToAndFro.exceptions.CityRepositoryOperationException;
+import com.ToAndFro.exceptions.CityOperationException;
 import com.ToAndFro.mapper.CityMapper;
 import com.ToAndFro.models.City;
 import org.slf4j.Logger;
@@ -41,12 +41,12 @@ public class CityRepository {
             int result = preparedStatement.executeUpdate();
             if (result == noChangedRows) {
                 LOGGER.error("Failed saving city");
-                throw new CityRepositoryOperationException("Failed saving city");
+                throw new CityOperationException("Failed saving city");
             }
             LOGGER.info("City saved: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error saving city: {}", e.getMessage());
-            throw new CityRepositoryOperationException("Error saving city", e);
+            throw new CityOperationException("Error saving city", e);
         }
     }
 
@@ -61,12 +61,12 @@ public class CityRepository {
             int result = preparedStatement.executeUpdate();
             if (result == noChangedRows) {
                 LOGGER.error("Failed updating city");
-                throw new CityRepositoryOperationException("Failed updating city");
+                throw new CityOperationException("Failed updating city");
             }
             LOGGER.info("City updated: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error updating city: {}", e.getMessage());
-            throw new CityRepositoryOperationException("Error updating city", e);
+            throw new CityOperationException("Error updating city", e);
         }
     }
 
@@ -80,12 +80,12 @@ public class CityRepository {
             int result = preparedStatement.executeUpdate();
             if (result == noChangedRows) {
                 LOGGER.error("Failed deleting city");
-                throw new CityRepositoryOperationException("Failed deleting city");
+                throw new CityOperationException("Failed deleting city");
             }
             LOGGER.info("City deleted: {} rows affected", result);
         } catch (SQLException e) {
             LOGGER.error("Error deleting city: {}", e.getMessage());
-            throw new CityRepositoryOperationException("Error deleting city", e);
+            throw new CityOperationException("Error deleting city", e);
         }
     }
 
@@ -103,12 +103,12 @@ public class CityRepository {
                     return cityMapper.mapToCity(resultSet);
                 } else {
                     LOGGER.error("No city found with id: {}", id);
-                    throw new CityRepositoryOperationException("No city found with id: " + id);
+                    throw new CityOperationException("No city found with id: " + id);
                 }
             }
         } catch (SQLException e) {
             LOGGER.error("Error finding city with id {}: {}", id, e.getMessage());
-            throw new CityRepositoryOperationException("Error finding city with id: " + id, e);
+            throw new CityOperationException("Error finding city with id: " + id, e);
         }
     }
 
@@ -125,7 +125,7 @@ public class CityRepository {
             return cities;
         } catch (SQLException e) {
             LOGGER.error("Error getting all cities: {}", e.getMessage());
-            throw new CityRepositoryOperationException("Error getting all cities", e);
+            throw new CityOperationException("Error getting all cities", e);
         }
     }
 }
