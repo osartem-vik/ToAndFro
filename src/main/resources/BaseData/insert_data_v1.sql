@@ -176,6 +176,7 @@ VALUES
 -- 26. Kyiv
 ('Kyiv', 9);
 
+
 -- 1) Ivan Petrenko — Passenger cars — Brovary
 INSERT INTO listing (user_id, category, city_id, title, description, price, created_at, status)
 VALUES ((SELECT id FROM user WHERE email = 'ivan.petrenko@gmail.com' LIMIT 1),
