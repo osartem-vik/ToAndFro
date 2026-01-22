@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppRunner implements CommandLineRunner {
 
-    private CLIMenu menu;
+    private final CLIMenu menu;
 
     public AppRunner(CLIMenu menu) {
         this.menu = menu;
