@@ -1,21 +1,33 @@
 package com.ToAndFro.models;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    private String password;
+    @Column(name = "lastname")
     private String lastName;
+    @Column(name = "firstname")
     private String firstName;
+    private String email;
+    @Column(name = "password_hash")
+    private String password;
     private String phone;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }
