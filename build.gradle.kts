@@ -7,11 +7,14 @@ plugins {
 group = "com.ToAndFro"
 version = "1.0-SNAPSHOT"
 
-
 val lombokVersion = "1.18.42"
 
 repositories {
     mavenCentral()
+}
+
+springBoot {
+    buildInfo()
 }
 
 dependencies {
@@ -19,8 +22,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.mysql:mysql-connector-j")
 
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
     testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
