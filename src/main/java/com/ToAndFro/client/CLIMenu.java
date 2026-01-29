@@ -3,27 +3,26 @@ package com.ToAndFro.client;
 import com.ToAndFro.client.menuItem.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
+@Component
 public class CLIMenu {
     private static final Logger LOGGER = LoggerFactory.getLogger(CLIMenu.class);
     private static final Scanner scanner = new Scanner(System.in);
 
     private static final int EXIT_KEY = 0;
 
-    private Map<Integer, MenuCommand> menuItems = Map.of(
-            1, new LoginCommand(),
-            2, new ListItemsCommand(),
-            3, new ViewItemCommand(),
-            4, new BuyItemCommand(),
-            5, new ProfileCommand(),
-            6, new MyItemsCommand(),
-            7, new AddItemCommand(),
-            8, new RemoveItemCommand()
-    );
+    private Map<Integer, MenuCommand> menuItems;
+
+    public CLIMenu(List<MenuCommand> commands) {
+        this.menuItems = new LinkedHashMap<>();
+        int index = 1;
+        for (MenuCommand command : commands) {
+            menuItems.put(index++, command);
+        }
+    }
 
     public void run() {
         boolean isRunnable = true;

@@ -1,9 +1,9 @@
 package com.ToAndFro.repository;
 
-import com.ToAndFro.models.Region;
+import com.ToAndFro.models.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RegionRepository extends JpaRepository<Region, Long> {
+public interface ImageRepository extends JpaRepository<Image, Long> {
 }

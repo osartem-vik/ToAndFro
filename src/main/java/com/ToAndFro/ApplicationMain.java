@@ -1,9 +1,11 @@
 package com.ToAndFro;
 
-import com.ToAndFro.client.CLIMenu;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class ApplicationMain {
     public static void main(String[] args) {
-        new CLIMenu().run();
+        SpringApplication.run(ApplicationMain.class, args);
     }
 }

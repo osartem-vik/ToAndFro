@@ -1,5 +1,8 @@
 package com.ToAndFro.client.menuItem;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public abstract class MenuCommand {
     private String name;
 
