@@ -1,4 +1,10 @@
-CREATE TABLE user
+-- liquibase formatted sql
+-- changeset raw:init_data_V1
+-- splitStatements:true
+-- endDelimiter:;
+
+
+CREATE TABLE `user`
 (
     id            BIGINT AUTO_INCREMENT PRIMARY KEY,
     lastname      VARCHAR(50)  NOT NULL,

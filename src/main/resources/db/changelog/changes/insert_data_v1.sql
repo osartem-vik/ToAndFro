@@ -1,3 +1,9 @@
+-- liquibase formatted sql
+-- changeset raw:init_data_V1
+-- splitStatements:true
+-- endDelimiter:;
+
+
 INSERT INTO user (email, password_hash, lastname, firstname, phone)
 VALUES ('ivan.petrenko@gmail.com', 'pass1234', 'Petrenko', 'Ivan', '+380671234567'),
        ('olena.shevchenko@yahoo.com', 'qwerty89', 'Shevchenko', 'Olena', '+380981112233'),

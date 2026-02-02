@@ -23,6 +23,7 @@ dependencies {
     implementation("com.mysql:mysql-connector-j")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.liquibase:liquibase-core")
 
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
