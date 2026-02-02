@@ -1,4 +1,4 @@
-package com.ToAndFro.models;
+package com.ToAndFro.models.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,11 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "region")
-public class Region {
+@Table(name = "city")
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    private Region region;
 }
