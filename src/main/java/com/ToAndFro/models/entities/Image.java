@@ -1,4 +1,4 @@
-package com.ToAndFro.models;
+package com.ToAndFro.models.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,17 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "chat")
-public class Chat {
+@Table(name = "image")
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String path;
+
     @ManyToOne
     @JoinColumn(name = "listing_id")
     private Listing listing;
-
-    @ManyToOne
-    @JoinColumn(name = "buyer_id")
-    private User buyer;
 }

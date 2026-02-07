@@ -1,4 +1,4 @@
-package com.ToAndFro.models;
+package com.ToAndFro.models.entities;
 
 public enum Category {
     TRANSPORT,

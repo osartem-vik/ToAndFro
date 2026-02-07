@@ -1,27 +1,28 @@
-package com.ToAndFro.models;
+package com.ToAndFro.models.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "image")
-public class Image {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String path;
+@Table(name = "favorite")
+public class Favorite {
+    @EmbeddedId
+    private FavoriteId id;
 
     @ManyToOne
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @MapsId("listingId")
     @JoinColumn(name = "listing_id")
     private Listing listing;
 }

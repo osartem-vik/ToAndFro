@@ -1,4 +1,4 @@
-package com.ToAndFro.models;
+package com.ToAndFro.models.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,23 +16,26 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "chat_message")
-public class ChatMessage {
+@Table(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id")
-    private User sender;
+    @Column(name = "lastname")
+    private String lastName;
 
-    @ManyToOne
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+    @Column(name = "firstname")
+    private String firstName;
 
-    @Column(columnDefinition = "text")
-    private String text;
+    private String email;
 
+    @Column(name = "password_hash")
+    private String password;
+
+    private String phone;
+
+    @Column(name = "created_at")
     @CreationTimestamp
-    private LocalDateTime timestamp;
+    private LocalDateTime createdAt;
 }

@@ -1,7 +1,7 @@
 package com.ToAndFro.repository;
 
-import com.ToAndFro.models.Favorite;
-import com.ToAndFro.models.FavoriteId;
+import com.ToAndFro.models.entities.Favorite;
+import com.ToAndFro.models.entities.FavoriteId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

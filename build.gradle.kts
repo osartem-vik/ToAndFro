@@ -24,6 +24,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.liquibase:liquibase-core")
+    implementation("org.modelmapper:modelmapper:3.2.0")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
