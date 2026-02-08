@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class RegionRequestDto {
-    @NotBlank
+    @NotBlank(message = "Region name cannot be blank")
     private String name;
 }
