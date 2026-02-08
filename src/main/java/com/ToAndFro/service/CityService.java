@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CityService {
@@ -63,14 +64,17 @@ public class CityService {
                 () -> new CityNotFoundException("City with id " + id + " not found"));
 
         if (cityRequestDto.getName() != null &&
-            !city.getName().equals(cityRequestDto.getName()) && cityRepository.existsByName(cityRequestDto.getName()))
-        {
+            !city.getName().equals(cityRequestDto.getName()) && cityRepository.existsByName(cityRequestDto.getName())) {
             throw new CityAlreadyExistsException("City with name " + cityRequestDto.getName() + " already exists");
         }
 
-        modelMapper.map(cityRequestDto, city);
+        if (cityRequestDto.getName() != null) {
+            city.setName(cityRequestDto.getName());
+        }
 
+        // Handle region update safely
         if (cityRequestDto.getRegionId() != null) {
+            // fetch the managed Region entity from DB
             city.setRegion(regionService.getRegionById(cityRequestDto.getRegionId()));
         }
 

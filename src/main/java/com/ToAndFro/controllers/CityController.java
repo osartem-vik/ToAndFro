@@ -39,7 +39,7 @@ public class CityController {
         return cityService.updateCity(id, cityRequestDto);
     }
 
-    @PatchMapping
+    @PatchMapping("/{id}")
     public CityResponseDto patchCity(@PathVariable Long id, @RequestBody UpdateCityRequestDto cityRequestDto) {
         return cityService.patchCity(id, cityRequestDto);
     }
