@@ -1,5 +1,6 @@
 package com.ToAndFro.service;
 
+import com.ToAndFro.exceptions.RegionAlreadyExistsException;
 import com.ToAndFro.exceptions.RegionNotFoundException;
 import com.ToAndFro.models.dto.request.RegionRequestDto;
 import com.ToAndFro.models.dto.response.RegionResponseDto;
@@ -32,6 +33,10 @@ public class RegionService {
     }
 
     public RegionResponseDto createRegion(RegionRequestDto regionRequestDto) {
+        if(regionRepository.existsByName(regionRequestDto.getName())) {
+            throw new RegionAlreadyExistsException("Region with name " + regionRequestDto.getName() + " already exists");
+        }
+
         Region region = modelMapper.map(regionRequestDto, Region.class);
         return modelMapper.map(regionRepository.save(region), RegionResponseDto.class);
     }
