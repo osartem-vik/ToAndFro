@@ -10,6 +10,7 @@ import com.ToAndFro.repository.CityRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,14 +28,13 @@ public class CityService {
                 .toList();
     }
 
-
     public CityResponseDto getCityById(Long id) {
         City city = cityRepository.findById(id).orElseThrow(
                 () -> new CityNotFoundException("City with id " + id + " not found"));
         return modelMapper.map(city, CityResponseDto.class);
     }
 
-
+    @Transactional
     public CityResponseDto createCity(CityRequestDto cityRequestDto) {
         if (cityRepository.existsByName(cityRequestDto.getName())) {
             throw new CityAlreadyExistsException("City with name " + cityRequestDto.getName() + " already exists");
@@ -46,6 +46,7 @@ public class CityService {
         return modelMapper.map(cityRepository.save(city), CityResponseDto.class);
     }
 
+    @Transactional
     public CityResponseDto updateCity(Long id, CityRequestDto cityRequestDto) {
         City city = cityRepository.findById(id).orElseThrow(
                 () -> new CityNotFoundException("City with id " + id + " not found"));
@@ -59,6 +60,7 @@ public class CityService {
         return modelMapper.map(cityRepository.save(city), CityResponseDto.class);
     }
 
+    @Transactional
     public CityResponseDto patchCity(Long id, UpdateCityRequestDto cityRequestDto) {
         City city = cityRepository.findById(id).orElseThrow(
                 () -> new CityNotFoundException("City with id " + id + " not found"));
@@ -72,15 +74,14 @@ public class CityService {
             city.setName(cityRequestDto.getName());
         }
 
-        // Handle region update safely
         if (cityRequestDto.getRegionId() != null) {
-            // fetch the managed Region entity from DB
             city.setRegion(regionService.getRegionById(cityRequestDto.getRegionId()));
         }
 
         return modelMapper.map(cityRepository.save(city), CityResponseDto.class);
     }
 
+    @Transactional
     public void deleteCity(Long id) {
         City city = cityRepository.findById(id).orElseThrow(
                 () -> new CityNotFoundException("City with id " + id + " not found"));

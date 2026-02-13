@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,7 +19,6 @@ import java.util.List;
 public class RegionService {
     private final RegionRepository regionRepository;
     private final ModelMapper modelMapper;
-
 
     public List<RegionResponseDto> findAllRegions() {
         return regionRepository.findAll()
@@ -33,6 +33,7 @@ public class RegionService {
         return modelMapper.map(region, RegionResponseDto.class);
     }
 
+    @Transactional
     public RegionResponseDto createRegion(RegionRequestDto regionRequestDto) {
         if(regionRepository.existsByName(regionRequestDto.getName())) {
             throw new RegionAlreadyExistsException("Region with name " + regionRequestDto.getName() + " already exists");
@@ -42,7 +43,7 @@ public class RegionService {
         return modelMapper.map(regionRepository.save(region), RegionResponseDto.class);
     }
 
-
+    @Transactional
     public RegionResponseDto updateRegion(Long id, RegionRequestDto regionRequestDto) {
         Region region = regionRepository.findById(id)
                 .orElseThrow(() -> new RegionNotFoundException("Region with id " + id + " not found"));
@@ -55,6 +56,7 @@ public class RegionService {
         return modelMapper.map(regionRepository.save(region), RegionResponseDto.class);
     }
 
+    @Transactional
     public void deleteRegion(Long id) {
         if (!regionRepository.existsById(id)) {
             throw new RegionNotFoundException("Region with id " + id + " not found");

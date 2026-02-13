@@ -11,6 +11,7 @@ import com.ToAndFro.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class UserService {
         return modelMapper.map(user, UserResponseDto.class);
     }
 
+    @Transactional
     public UserResponseDto createUser(CreateUserRequestDto createUserRequestDto) {
         isEmailTaken(createUserRequestDto.getEmail());
 
@@ -40,9 +42,9 @@ public class UserService {
         return modelMapper.map(savedUser, UserResponseDto.class);
     }
 
+    @Transactional
     public UserResponseDto updateUser(Long id, UpdateUserRequestDto updateUserRequestDto) {
         isEmailTaken(updateUserRequestDto.getEmail());
-
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
@@ -51,6 +53,7 @@ public class UserService {
         return modelMapper.map(userRepository.save(user), UserResponseDto.class);
     }
 
+    @Transactional
     public UserResponseDto patchUser(Long id, PatchUserRequestDto patchUserRequestDto) {
         isEmailTaken(patchUserRequestDto.getEmail());
 
@@ -61,6 +64,7 @@ public class UserService {
         return modelMapper.map(userRepository.save(user), UserResponseDto.class);
     }
 
+    @Transactional
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
